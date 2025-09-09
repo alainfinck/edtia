@@ -911,6 +911,75 @@ function afficherResultats(resultats) {
                     </button>
                 </div>
             </div>
+            
+            <!-- Statistiques détaillées -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                    <i data-lucide="bar-chart-3" class="inline-block mr-2"></i>
+                    Statistiques détaillées
+                </h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Heures par enseignant -->
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                            <i data-lucide="clock" class="inline-block mr-2"></i>
+                            Heures par enseignant
+                        </h4>
+                        <div class="space-y-3 max-h-80 overflow-y-auto">
+                            ${genererStatistiquesEnseignants(resultats.emploi_par_prof)}
+                        </div>
+                    </div>
+                    
+                    <!-- Taux d'occupation des salles -->
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                            <i data-lucide="building" class="inline-block mr-2"></i>
+                            Occupation des salles
+                        </h4>
+                        <div class="space-y-3 max-h-80 overflow-y-auto">
+                            ${genererStatistiquesSalles(resultats.emploi_temps)}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Répartition des matières -->
+                <div class="mt-8">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i data-lucide="pie-chart" class="inline-block mr-2"></i>
+                        Répartition des matières
+                    </h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        ${genererStatistiquesMatieres(resultats.emploi_temps)}
+                    </div>
+                </div>
+                
+                <!-- Indicateurs de performance -->
+                <div class="mt-8">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i data-lucide="trending-up" class="inline-block mr-2"></i>
+                        Indicateurs de performance
+                    </h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200 text-center">
+                            <div class="text-2xl font-bold text-blue-600">${resultats.score_optimisation * 100}%</div>
+                            <div class="text-sm text-blue-800">Score d'optimisation</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200 text-center">
+                            <div class="text-2xl font-bold text-green-600">${resultats.score_satisfaction * 100}%</div>
+                            <div class="text-sm text-green-800">Satisfaction enseignants</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-200 text-center">
+                            <div class="text-2xl font-bold text-purple-600">${resultats.conflits_resolus}</div>
+                            <div class="text-sm text-purple-800">Conflits résolus</div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg border border-orange-200 text-center">
+                            <div class="text-2xl font-bold text-orange-600">${resultats.temps_calcul}s</div>
+                            <div class="text-sm text-orange-800">Temps de calcul</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     `;
     
@@ -928,6 +997,122 @@ function exporterExcel() {
 
 function partagerEmploiTemps() {
     alert('Fonctionnalité de partage en cours de développement');
+}
+
+// Fonctions pour générer les statistiques détaillées
+function genererStatistiquesEnseignants(emploiParProf) {
+    const stats = [];
+    
+    Object.keys(emploiParProf).forEach(nomProf => {
+        const cours = emploiParProf[nomProf];
+        const totalHeures = cours.length;
+        const heuresParJour = {};
+        
+        // Compter les heures par jour
+        cours.forEach(cours => {
+            const jour = cours.jour;
+            heuresParJour[jour] = (heuresParJour[jour] || 0) + 1;
+        });
+        
+        // Calculer la charge de travail
+        const chargeMax = 35; // Heures max par semaine
+        const pourcentageCharge = Math.min((totalHeures / chargeMax) * 100, 100);
+        
+        stats.push(`
+            <div class="p-4 bg-gray-50 rounded-lg border">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="font-semibold text-gray-900">${nomProf}</div>
+                    <div class="text-sm font-bold text-blue-600">${totalHeures}h</div>
+                </div>
+                <div class="mb-2">
+                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                        <span>Charge de travail</span>
+                        <span>${pourcentageCharge.toFixed(1)}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: ${pourcentageCharge}%"></div>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500">
+                    ${Object.entries(heuresParJour).map(([jour, heures]) => `${jour}: ${heures}h`).join(' • ')}
+                </div>
+            </div>
+        `);
+    });
+    
+    return stats.join('');
+}
+
+function genererStatistiquesSalles(emploiTemps) {
+    const occupationSalles = {};
+    const totalCreneaux = 35; // 5 jours × 7 créneaux
+    
+    // Compter l'occupation de chaque salle
+    Object.values(emploiTemps).forEach(cours => {
+        cours.forEach(c => {
+            const salle = c.salle;
+            occupationSalles[salle] = (occupationSalles[salle] || 0) + 1;
+        });
+    });
+    
+    const stats = [];
+    Object.entries(occupationSalles).forEach(([salle, occupation]) => {
+        const tauxOccupation = (occupation / totalCreneaux) * 100;
+        const couleur = tauxOccupation > 80 ? 'red' : tauxOccupation > 60 ? 'yellow' : 'green';
+        
+        stats.push(`
+            <div class="p-4 bg-gray-50 rounded-lg border">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="font-semibold text-gray-900">Salle ${salle}</div>
+                    <div class="text-sm font-bold text-${couleur}-600">${tauxOccupation.toFixed(1)}%</div>
+                </div>
+                <div class="mb-2">
+                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                        <span>Occupation</span>
+                        <span>${occupation}/${totalCreneaux} créneaux</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-${couleur}-600 h-2 rounded-full" style="width: ${tauxOccupation}%"></div>
+                    </div>
+                </div>
+                <div class="text-xs text-gray-500">
+                    ${tauxOccupation > 80 ? 'Très occupée' : tauxOccupation > 60 ? 'Bien occupée' : 'Sous-utilisée'}
+                </div>
+            </div>
+        `);
+    });
+    
+    return stats.join('');
+}
+
+function genererStatistiquesMatieres(emploiTemps) {
+    const matieresCount = {};
+    
+    // Compter les cours par matière
+    Object.values(emploiTemps).forEach(cours => {
+        cours.forEach(c => {
+            const matiere = c.matiere;
+            matieresCount[matiere] = (matieresCount[matiere] || 0) + 1;
+        });
+    });
+    
+    const totalCours = Object.values(matieresCount).reduce((sum, count) => sum + count, 0);
+    const couleurs = ['blue', 'green', 'purple', 'orange', 'red', 'indigo'];
+    let couleurIndex = 0;
+    
+    return Object.entries(matieresCount).map(([matiere, count]) => {
+        const pourcentage = ((count / totalCours) * 100).toFixed(1);
+        const couleur = couleurs[couleurIndex % couleurs.length];
+        couleurIndex++;
+        
+        return `
+            <div class="bg-${couleur}-50 p-4 rounded-lg border border-${couleur}-200 text-center">
+                <div class="text-2xl font-bold text-${couleur}-600">${count}</div>
+                <div class="text-sm text-${couleur}-800 font-medium">${matiere}</div>
+                <div class="text-xs text-${couleur}-600">${pourcentage}%</div>
+            </div>
+        `;
+    }).join('');
 }
 
 // Afficher les listes prédéfinies
