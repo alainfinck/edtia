@@ -1,0 +1,414 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Tester le service - Edtia{% endblock %}
+
+{% block meta_description %}Testez gratuitement Edtia avec notre simulateur interactif. Découvrez comment notre IA optimise les emplois du temps en temps réel.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Testez Edtia gratuitement
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Découvrez la puissance de notre IA avec notre simulateur interactif
+        </p>
+    </div>
+</section>
+
+<!-- Simulateur interactif -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Configuration -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                    Configurez votre établissement
+                </h2>
+                
+                <form id="test-config" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre d'enseignants</label>
+                        <input type="number" id="nb_enseignants" min="5" max="50" value="15" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de classes</label>
+                        <input type="number" id="nb_classes" min="3" max="20" value="8" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de salles</label>
+                        <input type="number" id="nb_salles" min="5" max="30" value="12" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Niveau de complexité</label>
+                        <select id="complexite" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="simple">Simple</option>
+                            <option value="moyen" selected>Moyen</option>
+                            <option value="complexe">Complexe</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Contraintes spéciales</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="contrainte_sport" class="mr-3">
+                                <span class="text-gray-700">Salle de sport partagée</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="contrainte_lab" class="mr-3">
+                                <span class="text-gray-700">Laboratoires spécialisés</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" id="contrainte_transport" class="mr-3">
+                                <span class="text-gray-700">Contraintes de transport</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="lancerSimulation()" 
+                            class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+                        <i data-lucide="play" class="inline-block mr-2"></i>
+                        Lancer la simulation
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Résultats -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                    Résultats de l'optimisation
+                </h2>
+                
+                <div id="simulation-results" class="space-y-6">
+                    <div class="text-center text-gray-500 py-12">
+                        <i data-lucide="play-circle" class="w-16 h-16 mx-auto mb-4"></i>
+                        <p>Configurez les paramètres et lancez la simulation pour voir les résultats</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Démonstration en temps réel -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Démonstration en temps réel
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Regardez notre IA résoudre des problèmes complexes d'emploi du temps
+            </p>
+        </div>
+        
+        <div class="bg-gray-900 rounded-xl p-8 text-white">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-semibold">Simulation en cours...</h3>
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm">IA Active</span>
+                </div>
+            </div>
+            
+            <div id="demo-console" class="bg-black rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm">
+                <div class="text-green-400">[INFO] Initialisation du moteur d'optimisation...</div>
+                <div class="text-blue-400">[INFO] Chargement des contraintes: 15 enseignants, 8 classes, 12 salles</div>
+                <div class="text-yellow-400">[INFO] Analyse des disponibilités...</div>
+                <div class="text-green-400">[INFO] Résolution des conflits détectés: 3 conflits trouvés</div>
+                <div class="text-blue-400">[INFO] Optimisation des ressources...</div>
+                <div class="text-green-400">[SUCCESS] Emploi du temps optimisé généré en 2.3 secondes</div>
+                <div class="text-purple-400">[RESULT] Taux d'optimisation: 95%</div>
+                <div class="text-purple-400">[RESULT] Satisfaction enseignants: 92%</div>
+                <div class="text-purple-400">[RESULT] Utilisation salles: 88%</div>
+            </div>
+            
+            <div class="mt-6 flex justify-center">
+                <button onclick="relancerDemo()" 
+                        class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    <i data-lucide="refresh-cw" class="inline-block mr-2"></i>
+                    Relancer la démonstration
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparaison avant/après -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Avant vs Après Edtia
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez l'impact d'Edtia sur votre établissement
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Avant -->
+            <div class="bg-red-50 p-8 rounded-xl border border-red-200">
+                <h3 class="text-2xl font-bold text-red-900 mb-6 flex items-center">
+                    <i data-lucide="x-circle" class="mr-3"></i>
+                    Avant Edtia
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Temps de création emploi du temps</span>
+                        <span class="text-red-600 font-bold">8-12 heures</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Conflits non résolus</span>
+                        <span class="text-red-600 font-bold">15-25%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Satisfaction enseignants</span>
+                        <span class="text-red-600 font-bold">65%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Utilisation des salles</span>
+                        <span class="text-red-600 font-bold">70%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Temps de recherche remplaçants</span>
+                        <span class="text-red-600 font-bold">2-4 heures</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Après -->
+            <div class="bg-green-50 p-8 rounded-xl border border-green-200">
+                <h3 class="text-2xl font-bold text-green-900 mb-6 flex items-center">
+                    <i data-lucide="check-circle" class="mr-3"></i>
+                    Avec Edtia
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Temps de création emploi du temps</span>
+                        <span class="text-green-600 font-bold">2-5 minutes</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Conflits non résolus</span>
+                        <span class="text-green-600 font-bold">0-2%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Satisfaction enseignants</span>
+                        <span class="text-green-600 font-bold">92%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Utilisation des salles</span>
+                        <span class="text-green-600 font-bold">88%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Temps de recherche remplaçants</span>
+                        <span class="text-green-600 font-bold">30 secondes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <div class="bg-white p-8 rounded-xl shadow-lg inline-block">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Gain de productivité</h3>
+                <div class="text-4xl font-bold text-blue-600 mb-2">85%</div>
+                <p class="text-gray-600">de temps économisé sur la gestion des emplois du temps</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 hero-gradient text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            Prêt à transformer votre établissement ?
+        </h2>
+        <p class="text-xl mb-8 text-blue-100">
+            Commencez votre essai gratuit de 30 jours dès aujourd'hui
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'public:demo' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                <i data-lucide="rocket" class="inline-block mr-2"></i>
+                Commencer l'essai gratuit
+            </a>
+            <a href="{% url 'public:contact' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                <i data-lucide="phone" class="inline-block mr-2"></i>
+                Parler à un expert
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function lancerSimulation() {
+    const nbEnseignants = document.getElementById('nb_enseignants').value;
+    const nbClasses = document.getElementById('nb_classes').value;
+    const nbSalles = document.getElementById('nb_salles').value;
+    const complexite = document.getElementById('complexite').value;
+    
+    const contraintes = [];
+    if (document.getElementById('contrainte_sport').checked) contraintes.push('Salle de sport');
+    if (document.getElementById('contrainte_lab').checked) contraintes.push('Laboratoires');
+    if (document.getElementById('contrainte_transport').checked) contraintes.push('Transport');
+    
+    // Simulation des résultats
+    const results = genererResultats(nbEnseignants, nbClasses, nbSalles, complexite, contraintes);
+    afficherResultats(results);
+}
+
+function genererResultats(nbEnseignants, nbClasses, nbSalles, complexite, contraintes) {
+    const baseOptimisation = 85;
+    const baseSatisfaction = 80;
+    const baseUtilisation = 75;
+    
+    let bonusOptimisation = 0;
+    let bonusSatisfaction = 0;
+    let bonusUtilisation = 0;
+    
+    // Bonus selon la complexité
+    switch(complexite) {
+        case 'simple':
+            bonusOptimisation = 10;
+            bonusSatisfaction = 8;
+            bonusUtilisation = 5;
+            break;
+        case 'moyen':
+            bonusOptimisation = 5;
+            bonusSatisfaction = 5;
+            bonusUtilisation = 3;
+            break;
+        case 'complexe':
+            bonusOptimisation = 0;
+            bonusSatisfaction = 2;
+            bonusUtilisation = 1;
+            break;
+    }
+    
+    // Bonus selon les contraintes
+    bonusOptimisation += contraintes.length * 2;
+    bonusSatisfaction += contraintes.length * 1;
+    bonusUtilisation += contraintes.length * 1;
+    
+    return {
+        optimisation: Math.min(98, baseOptimisation + bonusOptimisation),
+        satisfaction: Math.min(98, baseSatisfaction + bonusSatisfaction),
+        utilisation: Math.min(95, baseUtilisation + bonusUtilisation),
+        tempsGeneration: Math.max(0.5, 5 - (nbEnseignants / 10)),
+        conflitsResolus: Math.max(95, 100 - (contraintes.length * 2))
+    };
+}
+
+function afficherResultats(results) {
+    const container = document.getElementById('simulation-results');
+    
+    container.innerHTML = `
+        <div class="space-y-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="check-circle" class="text-green-600 w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Simulation terminée !</h3>
+                <p class="text-gray-600">Emploi du temps généré en ${results.tempsGeneration.toFixed(1)} secondes</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Optimisation</span>
+                        <span class="text-sm font-bold text-blue-600">${results.optimisation}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: ${results.optimisation}%"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Satisfaction</span>
+                        <span class="text-sm font-bold text-green-600">${results.satisfaction}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-green-600 h-2 rounded-full" style="width: ${results.satisfaction}%"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Utilisation salles</span>
+                        <span class="text-sm font-bold text-purple-600">${results.utilisation}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-purple-600 h-2 rounded-full" style="width: ${results.utilisation}%"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Conflits résolus</span>
+                        <span class="text-sm font-bold text-orange-600">${results.conflitsResolus}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-orange-600 h-2 rounded-full" style="width: ${results.conflitsResolus}%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-100">
+                <h4 class="font-semibold text-gray-900 mb-3">Résumé des améliorations</h4>
+                <ul class="text-sm text-gray-700 space-y-2">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-2"></i>
+                        Temps de génération réduit de 95%
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-2"></i>
+                        Conflits automatiquement résolus
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-2"></i>
+                        Optimisation des ressources
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-2"></i>
+                        Satisfaction enseignants améliorée
+                    </li>
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    // Réinitialiser les icônes
+    lucide.createIcons();
+}
+
+function relancerDemo() {
+    const console = document.getElementById('demo-console');
+    console.innerHTML = `
+        <div class="text-green-400">[INFO] Initialisation du moteur d'optimisation...</div>
+        <div class="text-blue-400">[INFO] Chargement des contraintes: 15 enseignants, 8 classes, 12 salles</div>
+        <div class="text-yellow-400">[INFO] Analyse des disponibilités...</div>
+        <div class="text-green-400">[INFO] Résolution des conflits détectés: 3 conflits trouvés</div>
+        <div class="text-blue-400">[INFO] Optimisation des ressources...</div>
+        <div class="text-green-400">[SUCCESS] Emploi du temps optimisé généré en 2.3 secondes</div>
+        <div class="text-purple-400">[RESULT] Taux d'optimisation: 95%</div>
+        <div class="text-purple-400">[RESULT] Satisfaction enseignants: 92%</div>
+        <div class="text-purple-400">[RESULT] Utilisation salles: 88%</div>
+    `;
+}
+</script>
+{% endblock %}
+

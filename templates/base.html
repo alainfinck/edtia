@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}Edtia est une solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'intelligence artificielle. Gestion intelligente des remplaçants et optimisation des ressources pédagogiques.{% endblock %}">
+    <meta name="keywords" content="emploi du temps, éducation, optimisation, IA, remplaçants, établissement scolaire, rectorat">
+    <meta name="author" content="Edtia">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.build_absolute_uri }}{% static 'images/edtia-og-image.jpg' %}{% endblock %}">
+    <meta property="og:site_name" content="Edtia">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.build_absolute_uri }}{% static 'images/edtia-twitter-image.jpg' %}{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        [data-lucide] {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="h-full bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{% url 'home' %}" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Edtia</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                        <div class="flex items-center space-x-4">
+                            <a href="{% url 'dashboard:index' %}" class="text-gray-700 hover:text-blue-600 transition-colors">
+                                <i data-lucide="layout-dashboard" class="inline-block mr-1"></i>
+                                Tableau de bord
+                            </a>
+                            <a href="{% url 'emplois_temps:liste' %}" class="text-gray-700 hover:text-blue-600 transition-colors">
+                                <i data-lucide="calendar" class="inline-block mr-1"></i>
+                                Emplois du temps
+                            </a>
+                            <a href="{% url 'remplacements:liste' %}" class="text-gray-700 hover:text-blue-600 transition-colors">
+                                <i data-lucide="users" class="inline-block mr-1"></i>
+                                Remplaçants
+                            </a>
+                            
+                            <!-- Menu utilisateur -->
+                            <div class="relative">
+                                <button class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors" onclick="toggleUserMenu()">
+                                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                                        <i data-lucide="user" class="text-gray-600"></i>
+                                    </div>
+                                    <span>{{ user.get_full_name|default:user.username }}</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </button>
+                                
+                                <!-- Dropdown menu -->
+                                <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                                    <a href="{% url 'accounts:profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i data-lucide="user" class="inline-block mr-2"></i>
+                                        Mon profil
+                                    </a>
+                                    <a href="{% url 'accounts:settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i data-lucide="settings" class="inline-block mr-2"></i>
+                                        Paramètres
+                                    </a>
+                                    <hr class="my-1">
+                                    <a href="{% url 'account_logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <i data-lucide="log-out" class="inline-block mr-2"></i>
+                                        Déconnexion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="flex items-center space-x-4">
+                            <a href="{% url 'account_login' %}" class="text-gray-700 hover:text-blue-600 transition-colors">
+                                Connexion
+                            </a>
+                            <a href="{% url 'account_signup' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                Inscription
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-lg {% if message.tags == 'error' %}bg-red-100 border border-red-400 text-red-700{% elif message.tags == 'warning' %}bg-yellow-100 border border-yellow-400 text-yellow-700{% elif message.tags == 'success' %}bg-green-100 border border-green-400 text-green-700{% else %}bg-blue-100 border border-blue-400 text-blue-700{% endif %}">
+                    <div class="flex items-center">
+                        <i data-lucide="{% if message.tags == 'error' %}alert-circle{% elif message.tags == 'warning' %}alert-triangle{% elif message.tags == 'success' %}check-circle{% else %}info{% endif %}" class="mr-2"></i>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Contenu principal -->
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="calendar" class="text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Edtia</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'intelligence artificielle.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-600">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-600">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-600">
+                            <i data-lucide="github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Produit</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Fonctionnalités</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Tarifs</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Démo</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Documentation</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Centre d'aide</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Contact</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900">Statut</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-8 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-600 text-sm">
+                        © 2024 Edtia. Tous droits réservés.
+                    </p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="#" class="text-gray-600 hover:text-gray-900 text-sm">Mentions légales</a>
+                        <a href="#" class="text-gray-600 hover:text-gray-900 text-sm">Politique de confidentialité</a>
+                        <a href="#" class="text-gray-600 hover:text-gray-900 text-sm">CGU</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialiser Lucide Icons
+        lucide.createIcons();
+        
+        // Toggle user menu
+        function toggleUserMenu() {
+            const menu = document.getElementById('userMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Fermer le menu en cliquant ailleurs
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('userMenu');
+            const button = event.target.closest('button');
+            
+            if (!button || !button.onclick || button.onclick.toString().indexOf('toggleUserMenu') === -1) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

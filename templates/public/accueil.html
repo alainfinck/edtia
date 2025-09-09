@@ -1,0 +1,422 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Edtia - Optimisation des emplois du temps éducatifs avec l'IA{% endblock %}
+
+{% block meta_description %}Edtia est une solution SaaS révolutionnaire d'optimisation des emplois du temps éducatifs alimentée par l'intelligence artificielle. Gérez intelligemment les remplaçants, optimisez les ressources pédagogiques et améliorez l'efficacité de votre établissement scolaire.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8">
+                Optimisez vos emplois du temps avec l'<span class="text-yellow-300">IA</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-4xl mx-auto">
+                Solution SaaS intelligente pour la gestion des emplois du temps éducatifs, 
+                des remplaçants et l'optimisation des ressources pédagogiques.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="{% url 'public:demo' %}" class="bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-300 transition-colors shadow-lg">
+                    <i data-lucide="rocket" class="inline-block mr-2"></i>
+                    Demander une démo gratuite
+                </a>
+                <a href="#fonctionnalites" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition-colors">
+                    <i data-lucide="play" class="inline-block mr-2"></i>
+                    Découvrir les fonctionnalités
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistiques -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">500+</div>
+                <div class="text-gray-600">Établissements</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">50K+</div>
+                <div class="text-gray-600">Enseignants</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">95%</div>
+                <div class="text-gray-600">Satisfaction</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">24/7</div>
+                <div class="text-gray-600">Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités principales -->
+<section id="fonctionnalites" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Fonctionnalités révolutionnaires
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez comment Edtia transforme la gestion des emplois du temps éducatifs 
+                grâce à l'intelligence artificielle
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Optimisation IA -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="brain" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Optimisation IA</h3>
+                <p class="text-gray-600 mb-6">
+                    Algorithmes d'intelligence artificielle pour optimiser automatiquement 
+                    les emplois du temps en respectant toutes les contraintes légales et pédagogiques.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Résolution automatique des conflits
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Optimisation des ressources
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Respect des contraintes légales
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Gestion des remplaçants -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="users" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Gestion des remplaçants</h3>
+                <p class="text-gray-600 mb-6">
+                    Matching intelligent des remplaçants disponibles avec les besoins 
+                    de l'établissement en temps réel.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Propositions automatiques
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Évaluation des compétences
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Notifications en temps réel
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Tableau de bord rectorat -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="bar-chart-3" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tableau de bord rectorat</h3>
+                <p class="text-gray-600 mb-6">
+                    Vue d'ensemble complète de tous les établissements avec 
+                    analyses et rapports détaillés.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Monitoring en temps réel
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Rapports automatisés
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Alertes intelligentes
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Prédiction d'absences -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="trending-up" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Prédiction d'absences</h3>
+                <p class="text-gray-600 mb-6">
+                    Machine learning pour prédire les absences et anticiper 
+                    les besoins en remplaçants.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Analyse prédictive
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Facteurs de risque
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Recommandations proactives
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Gestion des salles -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="building" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Gestion des salles</h3>
+                <p class="text-gray-600 mb-6">
+                    Optimisation intelligente de l'utilisation des salles 
+                    et des équipements pédagogiques.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Attribution automatique
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Gestion des équipements
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Contrôle des disponibilités
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Notifications intelligentes -->
+            <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
+                <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                    <i data-lucide="bell" class="text-white w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Notifications intelligentes</h3>
+                <p class="text-gray-600 mb-6">
+                    Système d'alertes en temps réel pour tous les acteurs 
+                    de l'établissement.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Alertes personnalisées
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Multi-canal (email, SMS, app)
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i data-lucide="check-circle" class="text-green-500 mr-3"></i>
+                        Gestion des priorités
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cas d'usage -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Cas d'usage concrets
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez comment Edtia résout les défis quotidiens des établissements éducatifs
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Cas d'usage 1 -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                        <i data-lucide="clock" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900">Absence de dernière minute</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-blue-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>8h00 :</strong> Un professeur de mathématiques annonce son absence pour 8h30
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-green-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>8h05 :</strong> L'IA identifie automatiquement les cours concernés et les contraintes
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-purple-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>8h10 :</strong> Proposition de 3 remplaçants qualifiés avec scores de compatibilité
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-yellow-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>8h15 :</strong> Notification automatique aux élèves et ajustement des salles
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cas d'usage 2 -->
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-xl border border-green-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                        <i data-lucide="calendar" class="text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900">Optimisation trimestrielle</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-blue-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>Analyse :</strong> L'IA analyse les emplois du temps actuels et identifie 15 conflits
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-green-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>Optimisation :</strong> Résolution automatique en 2 minutes avec 95% de satisfaction
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-purple-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>Validation :</strong> Proposition soumise au directeur avec rapport détaillé
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-3 h-3 bg-yellow-600 rounded-full mt-2 mr-3"></div>
+                        <p class="text-gray-700">
+                            <strong>Déploiement :</strong> Activation automatique et notifications à tous les acteurs
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Témoignages -->
+{% if temoignages %}
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Ce que disent nos clients
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez les témoignages des établissements qui font confiance à Edtia
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for temoignage in temoignages %}
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    {% if temoignage.photo %}
+                    <img src="{{ temoignage.photo.url }}" alt="{{ temoignage.prenom }} {{ temoignage.nom }}" class="w-12 h-12 rounded-full mr-4">
+                    {% else %}
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-blue-600"></i>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-semibold text-gray-900">{{ temoignage.prenom }} {{ temoignage.nom }}</h4>
+                        <p class="text-gray-600 text-sm">{{ temoignage.fonction }}</p>
+                        <p class="text-gray-600 text-sm">{{ temoignage.etablissement }}</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= temoignage.note %}
+                            <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                        {% else %}
+                            <i data-lucide="star" class="text-gray-300 w-5 h-5"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">{{ temoignage.titre }}</h5>
+                <p class="text-gray-600 italic">"{{ temoignage.contenu }}"</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{% url 'public:temoignages' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                Voir tous les témoignages
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-20 hero-gradient text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+            Prêt à révolutionner votre gestion des emplois du temps ?
+        </h2>
+        <p class="text-xl mb-8 text-blue-100">
+            Rejoignez les établissements qui font confiance à Edtia pour optimiser 
+            leurs emplois du temps avec l'intelligence artificielle.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'public:demo' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                <i data-lucide="rocket" class="inline-block mr-2"></i>
+                Essai gratuit 30 jours
+            </a>
+            <a href="{% url 'public:contact' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                <i data-lucide="phone" class="inline-block mr-2"></i>
+                Demander une démo
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Restez informé des dernières actualités
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+            Recevez nos conseils, actualités et nouveautés directement dans votre boîte mail
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+            <input 
+                type="email" 
+                id="newsletter-email"
+                placeholder="Votre email" 
+                class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+            <button 
+                onclick="subscribeNewsletter()"
+                class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+                S'abonner
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

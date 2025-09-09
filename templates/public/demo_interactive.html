@@ -1,0 +1,886 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Démonstration Interactive - Edtia{% endblock %}
+
+{% block meta_description %}Testez Edtia avec vos données réelles. Créez des emplois du temps optimisés pour votre établissement avec notre démonstration interactive.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Démonstration Interactive
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Créez des emplois du temps optimisés avec vos données réelles
+        </p>
+        
+        <!-- Bouton générer rapide -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <button onclick="genererEmploiTemps()" 
+                    class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg flex items-center">
+                <i data-lucide="play" class="mr-2"></i>
+                Générer l'emploi du temps
+            </button>
+            <div class="text-blue-100 text-sm">
+                <i data-lucide="info" class="inline-block mr-1"></i>
+                Configurez d'abord votre établissement ci-dessous
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interface de démonstration -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+            <!-- Configuration -->
+            <div class="xl:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-lg sticky top-8">
+                    <!-- Bouton générer en haut -->
+                    <div class="mb-6">
+                        <button onclick="genererEmploiTemps()" 
+                                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg flex items-center justify-center">
+                            <i data-lucide="play" class="mr-2"></i>
+                            Générer l'emploi du temps
+                        </button>
+                        <p class="text-xs text-gray-500 text-center mt-2">
+                            <i data-lucide="info" class="inline-block mr-1"></i>
+                            Configurez d'abord les paramètres ci-dessous
+                        </p>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                        Configuration de votre établissement
+                    </h2>
+                    
+                    <form id="demo-config" class="space-y-6">
+                        <!-- Informations générales -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Informations générales</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nom de l'établissement</label>
+                                    <input type="text" id="nom_etablissement" value="Collège Victor Hugo" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Type d'établissement</label>
+                                    <select id="type_etablissement" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option value="college">Collège</option>
+                                        <option value="lycee">Lycée</option>
+                                        <option value="ecole_primaire">École primaire</option>
+                                        <option value="universite">Université</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Ressources humaines -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Ressources humaines</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre d'enseignants</label>
+                                    <input type="number" id="nb_enseignants" min="5" max="100" value="25" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de classes</label>
+                                    <input type="number" id="nb_classes" min="3" max="30" value="12" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre d'élèves</label>
+                                    <input type="number" id="nb_eleves" min="50" max="2000" value="300" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Ressources matérielles -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Ressources matérielles</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de salles</label>
+                                    <input type="number" id="nb_salles" min="5" max="50" value="18" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Salles spécialisées</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="salle_sport" class="mr-3" checked>
+                                            <span class="text-gray-700">Salle de sport</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="salle_info" class="mr-3" checked>
+                                            <span class="text-gray-700">Salle informatique</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="labo_sciences" class="mr-3">
+                                            <span class="text-gray-700">Laboratoire de sciences</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="salle_arts" class="mr-3">
+                                            <span class="text-gray-700">Salle d'arts plastiques</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contraintes particulières -->
+                        <div class="border-b border-gray-200 pb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Contraintes particulières</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Enseignants à temps partiel</label>
+                                    <input type="number" id="temps_partiel" min="0" max="20" value="3" 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Contraintes de transport</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="transport_matin" class="mr-3">
+                                            <span class="text-gray-700">Arrivée matinale limitée (8h30)</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="transport_soir" class="mr-3">
+                                            <span class="text-gray-700">Départ soirée limité (17h00)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Préférences enseignants</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="pref_matin" class="mr-3" checked>
+                                            <span class="text-gray-700">Préférence cours du matin</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" id="pref_journee" class="mr-3" checked>
+                                            <span class="text-gray-700">Éviter les journées trop longues</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Matières -->
+                        <div class="pb-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Répartition des matières</h3>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Mathématiques</span>
+                                    <input type="number" id="maths" min="0" max="20" value="5" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Français</span>
+                                    <input type="number" id="francais" min="0" max="20" value="5" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Histoire-Géographie</span>
+                                    <input type="number" id="histoire" min="0" max="20" value="3" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Sciences</span>
+                                    <input type="number" id="sciences" min="0" max="20" value="4" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">Langues</span>
+                                    <input type="number" id="langues" min="0" max="20" value="3" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700">EPS</span>
+                                    <input type="number" id="eps" min="0" max="20" value="2" 
+                                           class="w-16 px-2 py-1 border border-gray-300 rounded text-center">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" onclick="genererEmploiTemps()" 
+                                class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+                            <i data-lucide="play" class="inline-block mr-2"></i>
+                            Générer l'emploi du temps
+                        </button>
+                        
+                        <!-- Bouton génération rapide -->
+                        <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <p class="text-xs text-gray-600 text-center mb-2">Génération rapide</p>
+                            <button type="button" onclick="genererEmploiTemps()" 
+                                    class="w-full bg-gray-600 text-white py-2 rounded-lg font-semibold text-sm hover:bg-gray-700 transition-colors">
+                                <i data-lucide="zap" class="inline-block mr-1"></i>
+                                Générer rapidement
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Résultats -->
+            <div class="xl:col-span-3">
+                <div id="demo-results" class="space-y-8">
+                    <!-- Message d'accueil -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="calendar" class="text-blue-600 w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                            Prêt à créer votre emploi du temps ?
+                        </h3>
+                        <p class="text-gray-600 mb-6">
+                            Configurez votre établissement dans le panneau de gauche, puis cliquez sur "Générer l'emploi du temps" pour voir la magie opérer !
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-blue-800 text-sm">
+                                <i data-lucide="info" class="inline-block mr-2"></i>
+                                Notre IA analysera toutes vos contraintes et générera un emploi du temps optimisé en quelques secondes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités avancées -->
+<section class="py-20 bg-white">
+    <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Fonctionnalités de la démonstration
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Découvrez toutes les capacités d'Edtia avec cette démonstration interactive
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+                <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="settings" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Configuration flexible</h3>
+                <p class="text-gray-600">Adaptez tous les paramètres à votre établissement : nombre d'enseignants, classes, salles, contraintes spéciales.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+                <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="brain" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">IA avancée</h3>
+                <p class="text-gray-600">Notre intelligence artificielle analyse toutes les contraintes et génère des emplois du temps optimaux.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-100">
+                <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="bar-chart" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Analytics en temps réel</h3>
+                <p class="text-gray-600">Visualisez les métriques d'optimisation, la satisfaction des enseignants et l'utilisation des ressources.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-100">
+                <div class="w-12 h-12 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="users" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Gestion des remplaçants</h3>
+                <p class="text-gray-600">Simulez des absences et voyez comment l'IA propose automatiquement des remplaçants qualifiés.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-xl border border-teal-100">
+                <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="trending-up" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Prédiction d'absences</h3>
+                <p class="text-gray-600">L'IA prédit les absences probables et ajuste automatiquement l'emploi du temps.</p>
+            </div>
+            
+            <div class="bg-gradient-to-br from-pink-50 to-rose-50 p-6 rounded-xl border border-pink-100">
+                <div class="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center mb-4">
+                    <i data-lucide="download" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">Export des résultats</h3>
+                <p class="text-gray-600">Téléchargez vos emplois du temps générés au format PDF, Excel ou intégrez-les dans votre système.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 hero-gradient text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            Prêt à transformer votre établissement ?
+        </h2>
+        <p class="text-xl mb-8 text-blue-100">
+            Commencez votre essai gratuit de 30 jours dès aujourd'hui
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'public:demo' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                <i data-lucide="rocket" class="inline-block mr-2"></i>
+                Commencer l'essai gratuit
+            </a>
+            <a href="{% url 'public:contact' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                <i data-lucide="phone" class="inline-block mr-2"></i>
+                Parler à un expert
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Bouton flottant pour générer -->
+<div class="fixed bottom-6 right-6 z-50">
+    <button onclick="genererEmploiTemps()" 
+            class="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors hover:scale-110 transform duration-200 flex items-center justify-center">
+        <i data-lucide="play" class="w-6 h-6"></i>
+    </button>
+    <div class="absolute bottom-full right-0 mb-2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap">
+        Générer l'emploi du temps
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+        // Fonction pour afficher les onglets
+        function afficherOnglet(onglet) {
+            // Masquer tous les contenus
+            document.querySelectorAll('.emploi-temps-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Désactiver tous les onglets
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+                tab.classList.add('text-gray-600', 'hover:text-blue-600');
+            });
+            
+            // Afficher le contenu sélectionné
+            document.getElementById(`vue-${onglet}`).classList.remove('hidden');
+            
+            // Activer l'onglet sélectionné
+            const tabActif = document.getElementById(`tab-${onglet}`);
+            tabActif.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+            tabActif.classList.remove('text-gray-600', 'hover:text-blue-600');
+            
+            // Si c'est l'onglet professeurs, générer le contenu
+            if (onglet === 'professeurs' && window.resultatsActuels) {
+                genererEmploiParProf(window.resultatsActuels.emploi_par_prof);
+            }
+        }
+        
+        // Fonction pour générer l'affichage par professeur
+        function genererEmploiParProf(emploiParProf) {
+            const container = document.getElementById('liste-professeurs');
+            container.innerHTML = '';
+            
+            Object.entries(emploiParProf).forEach(([nomProf, emploi]) => {
+                const profDiv = document.createElement('div');
+                profDiv.className = 'bg-gray-50 p-6 rounded-xl border border-gray-200';
+                
+                profDiv.innerHTML = `
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                        <i data-lucide="user" class="mr-2"></i>
+                        ${nomProf}
+                    </h4>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse text-sm">
+                            <thead>
+                                <tr class="border-b-2 border-gray-200 bg-white">
+                                    <th class="text-left py-2 px-3 font-semibold text-gray-900 text-sm">Jour</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">8h-9h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">9h-10h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">10h-11h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">11h-12h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">14h-15h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">15h-16h</th>
+                                    <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">16h-17h</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.entries(emploi).map(([jour, creneaux]) => `
+                                    <tr class="border-b border-gray-100">
+                                        <td class="py-3 px-4 font-medium text-gray-900">${jour}</td>
+                                        ${Object.values(creneaux).map(creneau => `
+                                            <td class="py-1 px-2">
+                                                ${creneau.map(cours => `
+                                                    <div class="text-xs bg-green-50 p-1 rounded mb-1 border-l-2 border-green-400 hover:bg-green-100 transition-colors">
+                                                        <div class="font-medium text-green-900 truncate">${cours.classe}</div>
+                                                        <div class="text-gray-700 truncate">${cours.matiere}</div>
+                                                        <div class="text-gray-500 truncate text-xs">${cours.salle}</div>
+                                                    </div>
+                                                `).join('')}
+                                            </td>
+                                        `).join('')}
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                
+                container.appendChild(profDiv);
+            });
+            
+            // Réinitialiser les icônes Lucide
+            lucide.createIcons();
+        }
+
+        function genererEmploiTemps() {
+    // Récupérer les données du formulaire
+    const config = {
+        nom_etablissement: document.getElementById('nom_etablissement').value,
+        type_etablissement: document.getElementById('type_etablissement').value,
+        nb_enseignants: parseInt(document.getElementById('nb_enseignants').value),
+        nb_classes: parseInt(document.getElementById('nb_classes').value),
+        nb_eleves: parseInt(document.getElementById('nb_eleves').value),
+        nb_salles: parseInt(document.getElementById('nb_salles').value),
+        salles_specialisees: {
+            sport: document.getElementById('salle_sport').checked,
+            info: document.getElementById('salle_info').checked,
+            labo: document.getElementById('labo_sciences').checked,
+            arts: document.getElementById('salle_arts').checked
+        },
+        contraintes: {
+            temps_partiel: parseInt(document.getElementById('temps_partiel').value),
+            transport_matin: document.getElementById('transport_matin').checked,
+            transport_soir: document.getElementById('transport_soir').checked,
+            pref_matin: document.getElementById('pref_matin').checked,
+            pref_journee: document.getElementById('pref_journee').checked
+        },
+        matieres: {
+            maths: parseInt(document.getElementById('maths').value),
+            francais: parseInt(document.getElementById('francais').value),
+            histoire: parseInt(document.getElementById('histoire').value),
+            sciences: parseInt(document.getElementById('sciences').value),
+            langues: parseInt(document.getElementById('langues').value),
+            eps: parseInt(document.getElementById('eps').value)
+        }
+    };
+    
+    // Afficher le loading
+    afficherLoading();
+    
+    // Simuler le traitement (dans une vraie app, ce serait un appel API)
+    setTimeout(() => {
+        const resultats = genererResultatsOptimises(config);
+        
+        // Stocker les résultats pour l'affichage par professeur
+        window.resultatsActuels = resultats;
+        
+        afficherResultats(resultats);
+    }, 2000);
+}
+
+function afficherLoading() {
+    const container = document.getElementById('demo-results');
+    container.innerHTML = `
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-6 animate-pulse">
+                    <i data-lucide="cpu" class="text-blue-600 w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Génération en cours...</h3>
+                <p class="text-gray-600 mb-6">Notre IA analyse vos contraintes et optimise votre emploi du temps</p>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Analyse des contraintes</span>
+                        <div class="w-32 bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full animate-pulse" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Optimisation des ressources</span>
+                        <div class="w-32 bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full animate-pulse" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Génération de l'emploi du temps</span>
+                        <div class="w-32 bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full animate-pulse" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Réinitialiser les icônes
+    lucide.createIcons();
+}
+
+function genererResultatsOptimises(config) {
+    // Calculer les métriques d'optimisation
+    const totalMatiere = Object.values(config.matieres).reduce((a, b) => a + b, 0);
+    const ratioEnseignantsClasses = config.nb_enseignants / config.nb_classes;
+    const ratioSallesClasses = config.nb_salles / config.nb_classes;
+    
+    // Calculer les scores d'optimisation
+    let scoreOptimisation = 85;
+    let scoreSatisfaction = 80;
+    let scoreUtilisation = 75;
+    
+    // Bonus selon les contraintes
+    if (config.contraintes.temps_partiel > 0) {
+        scoreOptimisation -= config.contraintes.temps_partiel * 2;
+        scoreSatisfaction += config.contraintes.temps_partiel;
+    }
+    
+    if (config.contraintes.transport_matin || config.contraintes.transport_soir) {
+        scoreOptimisation -= 5;
+        scoreSatisfaction -= 3;
+    }
+    
+    if (config.contraintes.pref_matin && config.contraintes.pref_journee) {
+        scoreSatisfaction += 8;
+    }
+    
+    // Bonus pour les salles spécialisées
+    const nbSallesSpecialisees = Object.values(config.salles_specialisees).filter(Boolean).length;
+    scoreUtilisation += nbSallesSpecialisees * 3;
+    
+    // Limiter les scores
+    scoreOptimisation = Math.min(98, Math.max(60, scoreOptimisation));
+    scoreSatisfaction = Math.min(98, Math.max(65, scoreSatisfaction));
+    scoreUtilisation = Math.min(95, Math.max(70, scoreUtilisation));
+    
+    // Générer l'emploi du temps
+    const { emploiTemps, emploiParProf } = genererEmploiTempsStructure(config);
+    
+    return {
+        config: config,
+        metriques: {
+            optimisation: scoreOptimisation,
+            satisfaction: scoreSatisfaction,
+            utilisation: scoreUtilisation,
+            conflits_resolus: Math.max(95, 100 - (config.contraintes.temps_partiel * 2)),
+            temps_generation: Math.max(0.5, 3 - (config.nb_enseignants / 20))
+        },
+        emploi_temps: emploiTemps,
+        emploi_par_prof: emploiParProf,
+        recommandations: genererRecommandations(config, scoreOptimisation, scoreSatisfaction)
+    };
+}
+
+function genererEmploiTempsStructure(config) {
+    const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+    const creneaux = ['8h-9h', '9h-10h', '10h-11h', '11h-12h', '14h-15h', '15h-16h', '16h-17h'];
+    const matieres = ['Maths', 'Français', 'Histoire', 'Sciences', 'Langues', 'EPS'];
+    
+    // Professeurs avec noms réalistes
+    const professeurs = [
+        { nom: 'Mme Dubois', prenom: 'Sophie', matieres: ['Maths', 'Sciences'], specialite: 'Mathématiques' },
+        { nom: 'M. Martin', prenom: 'Pierre', matieres: ['Français', 'Histoire'], specialite: 'Lettres' },
+        { nom: 'Mme Leroy', prenom: 'Marie', matieres: ['Langues'], specialite: 'Anglais' },
+        { nom: 'M. Bernard', prenom: 'Jean', matieres: ['Sciences'], specialite: 'Physique-Chimie' },
+        { nom: 'Mme Petit', prenom: 'Claire', matieres: ['Histoire'], specialite: 'Histoire-Géographie' },
+        { nom: 'M. Rousseau', prenom: 'Antoine', matieres: ['EPS'], specialite: 'Éducation Physique' },
+        { nom: 'Mme Moreau', prenom: 'Isabelle', matieres: ['Français'], specialite: 'Français' },
+        { nom: 'M. Durand', prenom: 'François', matieres: ['Sciences'], specialite: 'SVT' },
+        { nom: 'Mme Blanc', prenom: 'Nathalie', matieres: ['Maths'], specialite: 'Mathématiques' },
+        { nom: 'M. Garcia', prenom: 'Carlos', matieres: ['Langues'], specialite: 'Espagnol' }
+    ];
+    
+    const emploiTemps = {};
+    const emploiParProf = {};
+    
+    // Initialiser les emplois du temps
+    jours.forEach(jour => {
+        emploiTemps[jour] = {};
+        creneaux.forEach(creneau => {
+            emploiTemps[jour][creneau] = [];
+        });
+    });
+    
+    // Initialiser l'emploi par professeur
+    professeurs.forEach(prof => {
+        emploiParProf[prof.nom] = {};
+        jours.forEach(jour => {
+            emploiParProf[prof.nom][jour] = {};
+            creneaux.forEach(creneau => {
+                emploiParProf[prof.nom][jour][creneau] = [];
+            });
+        });
+    });
+    
+    // Générer les cours
+    jours.forEach(jour => {
+        creneaux.forEach(creneau => {
+            // Générer des cours pour chaque classe
+            for (let classe = 1; classe <= Math.min(config.nb_classes, 6); classe++) {
+                const matiere = matieres[Math.floor(Math.random() * matieres.length)];
+                const salle = Math.floor(Math.random() * config.nb_salles) + 1;
+                
+                // Trouver un professeur pour cette matière
+                const profsDisponibles = professeurs.filter(p => p.matieres.includes(matiere));
+                const prof = profsDisponibles[Math.floor(Math.random() * profsDisponibles.length)];
+                
+                const cours = {
+                    classe: `${config.type_etablissement === 'college' ? '6ème' : '1ère'}${classe}`,
+                    matiere: matiere,
+                    salle: `Salle ${salle}`,
+                    professeur: prof.nom,
+                    specialite: prof.specialite,
+                    eleves: Math.floor(config.nb_eleves / config.nb_classes)
+                };
+                
+                emploiTemps[jour][creneau].push(cours);
+                emploiParProf[prof.nom][jour][creneau].push({
+                    classe: cours.classe,
+                    matiere: cours.matiere,
+                    salle: cours.salle,
+                    eleves: cours.eleves
+                });
+            }
+        });
+    });
+    
+    return { emploiTemps, emploiParProf };
+}
+
+function genererRecommandations(config, scoreOptimisation, scoreSatisfaction) {
+    const recommandations = [];
+    
+    if (config.contraintes.temps_partiel > 5) {
+        recommandations.push({
+            type: 'warning',
+            titre: 'Temps partiel élevé',
+            description: 'Considérez embaucher plus d\'enseignants à temps plein pour améliorer la flexibilité.'
+        });
+    }
+    
+    if (scoreSatisfaction < 85) {
+        recommandations.push({
+            type: 'info',
+            titre: 'Satisfaction enseignants',
+            description: 'Ajustez les préférences horaires pour améliorer la satisfaction des enseignants.'
+        });
+    }
+    
+    if (config.nb_salles < config.nb_classes * 1.5) {
+        recommandations.push({
+            type: 'warning',
+            titre: 'Salles insuffisantes',
+            description: 'Le nombre de salles pourrait limiter l\'optimisation. Considérez des salles partagées.'
+        });
+    }
+    
+    if (scoreOptimisation > 90) {
+        recommandations.push({
+            type: 'success',
+            titre: 'Configuration optimale',
+            description: 'Votre configuration permet une excellente optimisation. Félicitations !'
+        });
+    }
+    
+    return recommandations;
+}
+
+function afficherResultats(resultats) {
+    const container = document.getElementById('demo-results');
+    
+    container.innerHTML = `
+        <div class="space-y-8">
+            <!-- Métriques d'optimisation -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Résultats d'optimisation</h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">${resultats.metriques.optimisation}%</div>
+                        <div class="text-gray-600">Optimisation</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600 mb-2">${resultats.metriques.satisfaction}%</div>
+                        <div class="text-gray-600">Satisfaction</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">${resultats.metriques.utilisation}%</div>
+                        <div class="text-gray-600">Utilisation salles</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-orange-600 mb-2">${resultats.metriques.conflits_resolus}%</div>
+                        <div class="text-gray-600">Conflits résolus</div>
+                    </div>
+                </div>
+                
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <p class="text-green-800">
+                        <i data-lucide="check-circle" class="inline-block mr-2"></i>
+                        Emploi du temps généré en ${resultats.metriques.temps_generation.toFixed(1)} secondes
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Emploi du temps -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <!-- Onglets -->
+                    <div class="mb-6">
+                        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+                            <button onclick="afficherOnglet('general')" id="tab-general" 
+                                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors bg-white text-blue-600 shadow-sm">
+                                <i data-lucide="calendar" class="inline-block mr-2"></i>
+                                Vue générale
+                            </button>
+                            <button onclick="afficherOnglet('professeurs')" id="tab-professeurs" 
+                                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-blue-600">
+                                <i data-lucide="users" class="inline-block mr-2"></i>
+                                Par professeur
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Vue générale -->
+                    <div id="vue-generale" class="emploi-temps-content">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+                            <i data-lucide="calendar" class="inline-block mr-2"></i>
+                            Emploi du temps général
+                        </h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse text-sm">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200 bg-gray-50">
+                                <th class="text-left py-2 px-3 font-semibold text-gray-900 text-sm">Jour</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">8h-9h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">9h-10h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">10h-11h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">11h-12h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">14h-15h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">15h-16h</th>
+                                <th class="text-left py-2 px-2 font-semibold text-gray-900 text-sm">16h-17h</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.entries(resultats.emploi_temps).map(([jour, creneaux]) => `
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-3 px-4 font-medium text-gray-900">${jour}</td>
+                                    ${Object.values(creneaux).map(creneau => `
+                                        <td class="py-1 px-2">
+                                            ${creneau.slice(0, 4).map(cours => `
+                                <div class="text-xs bg-blue-50 p-1 rounded mb-1 border-l-2 border-blue-400 hover:bg-blue-100 transition-colors">
+                                    <div class="font-medium text-blue-900 truncate">${cours.classe}</div>
+                                    <div class="text-gray-700 truncate">${cours.matiere}</div>
+                                    <div class="text-gray-500 truncate text-xs">${cours.professeur}</div>
+                                    <div class="text-gray-400 truncate text-xs">${cours.salle}</div>
+                                </div>
+                                            `).join('')}
+                                        </td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                    </div>
+                    
+                    <!-- Vue par professeur -->
+                    <div id="vue-professeurs" class="emploi-temps-content hidden">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+                            <i data-lucide="users" class="inline-block mr-2"></i>
+                            Emploi du temps par professeur
+                        </h3>
+                        
+                        <div id="liste-professeurs" class="space-y-6">
+                            <!-- Les emplois du temps par professeur seront générés ici -->
+                        </div>
+                    </div>
+            </div>
+            
+            <!-- Recommandations -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Recommandations</h3>
+                
+                <div class="space-y-4">
+                    ${resultats.recommandations.map(rec => `
+                        <div class="flex items-start p-4 rounded-lg ${
+                            rec.type === 'success' ? 'bg-green-50 border border-green-200' :
+                            rec.type === 'warning' ? 'bg-yellow-50 border border-yellow-200' :
+                            'bg-blue-50 border border-blue-200'
+                        }">
+                            <i data-lucide="${
+                                rec.type === 'success' ? 'check-circle' :
+                                rec.type === 'warning' ? 'alert-triangle' :
+                                'info'
+                            }" class="text-${
+                                rec.type === 'success' ? 'green' :
+                                rec.type === 'warning' ? 'yellow' :
+                                'blue'
+                            }-600 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${rec.titre}</h4>
+                                <p class="text-gray-600">${rec.description}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Actions</h3>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="exporterPDF()" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
+                        <i data-lucide="download" class="inline-block mr-2"></i>
+                        Exporter en PDF
+                    </button>
+                    <button onclick="exporterExcel()" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        <i data-lucide="file-spreadsheet" class="inline-block mr-2"></i>
+                        Exporter en Excel
+                    </button>
+                    <button onclick="partagerEmploiTemps()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                        <i data-lucide="share" class="inline-block mr-2"></i>
+                        Partager
+                    </button>
+                    <button onclick="genererEmploiTemps()" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors">
+                        <i data-lucide="refresh-cw" class="inline-block mr-2"></i>
+                        Régénérer
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Réinitialiser les icônes
+    lucide.createIcons();
+}
+
+function exporterPDF() {
+    alert('Fonctionnalité d\'export PDF en cours de développement');
+}
+
+function exporterExcel() {
+    alert('Fonctionnalité d\'export Excel en cours de développement');
+}
+
+function partagerEmploiTemps() {
+    alert('Fonctionnalité de partage en cours de développement');
+}
+</script>
+{% endblock %}

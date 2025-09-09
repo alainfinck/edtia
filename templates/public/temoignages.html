@@ -1,0 +1,250 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Témoignages - Edtia{% endblock %}
+
+{% block meta_description %}Découvrez les témoignages des établissements qui utilisent Edtia. Retours d'expérience et avis clients sur notre solution d'optimisation des emplois du temps.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Ce que disent nos clients
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Découvrez les retours d'expérience des établissements qui font confiance à Edtia
+        </p>
+    </div>
+</section>
+
+<!-- Témoignages -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if temoignages %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for temoignage in temoignages %}
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    {% if temoignage.photo %}
+                    <img src="{{ temoignage.photo.url }}" alt="{{ temoignage.prenom }} {{ temoignage.nom }}" class="w-12 h-12 rounded-full mr-4">
+                    {% else %}
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-blue-600"></i>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <h4 class="font-semibold text-gray-900">{{ temoignage.prenom }} {{ temoignage.nom }}</h4>
+                        <p class="text-gray-600 text-sm">{{ temoignage.fonction }}</p>
+                        <p class="text-gray-600 text-sm">{{ temoignage.etablissement }}</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    {% for i in "12345"|make_list %}
+                        {% if forloop.counter <= temoignage.note %}
+                            <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                        {% else %}
+                            <i data-lucide="star" class="text-gray-300 w-5 h-5"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">{{ temoignage.titre }}</h5>
+                <p class="text-gray-600 italic">"{{ temoignage.contenu }}"</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Témoignages de démonstration -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Marie Dubois</h4>
+                        <p class="text-gray-600 text-sm">Directrice</p>
+                        <p class="text-gray-600 text-sm">Collège Victor Hugo</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Révolutionnaire !</h5>
+                <p class="text-gray-600 italic">"Edtia a transformé notre établissement. Ce qui prenait des heures se fait maintenant en quelques minutes. Nos enseignants sont ravis de leurs nouveaux emplois du temps."</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Pierre Martin</h4>
+                        <p class="text-gray-600 text-sm">Proviseur</p>
+                        <p class="text-gray-600 text-sm">Lycée Jean Moulin</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Gain de temps exceptionnel</h5>
+                <p class="text-gray-600 italic">"La gestion des remplaçants est devenue un jeu d'enfant. L'IA trouve automatiquement les meilleures solutions. Nous avons économisé 80% de notre temps de gestion."</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-purple-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Sophie Leroy</h4>
+                        <p class="text-gray-600 text-sm">Responsable pédagogique</p>
+                        <p class="text-gray-600 text-sm">École primaire Les Lilas</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Interface intuitive</h5>
+                <p class="text-gray-600 italic">"L'interface est très intuitive et les tableaux de bord nous donnent une visibilité complète sur notre établissement. Un outil indispensable !"</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Jean-Claude Bernard</h4>
+                        <p class="text-gray-600 text-sm">Recteur</p>
+                        <p class="text-gray-600 text-sm">Académie de Paris</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Vue d'ensemble exceptionnelle</h5>
+                <p class="text-gray-600 italic">"Le tableau de bord rectorat nous permet de piloter tous nos établissements avec une précision remarquable. Les analytics sont très utiles pour nos décisions stratégiques."</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-teal-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Isabelle Moreau</h4>
+                        <p class="text-gray-600 text-sm">Enseignante</p>
+                        <p class="text-gray-600 text-sm">Collège Marie Curie</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Emploi du temps équilibré</h5>
+                <p class="text-gray-600 italic">"Mon nouvel emploi du temps est parfaitement équilibré. L'IA a pris en compte mes préférences et mes contraintes. Je suis beaucoup plus sereine !"</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
+                        <i data-lucide="user" class="text-pink-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Michel Rousseau</h4>
+                        <p class="text-gray-600 text-sm">Directeur</p>
+                        <p class="text-gray-600 text-sm">Lycée technique Pasteur</p>
+                    </div>
+                </div>
+                <div class="flex mb-4">
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                    <i data-lucide="star" class="text-yellow-400 w-5 h-5"></i>
+                </div>
+                <h5 class="font-semibold text-gray-900 mb-3">Support technique excellent</h5>
+                <p class="text-gray-600 italic">"L'équipe support d'Edtia est exceptionnelle. Ils nous ont accompagnés tout au long de la migration et sont toujours disponibles pour nos questions."</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Statistiques -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Nos clients en chiffres
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Des résultats concrets qui témoignent de notre succès
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">500+</div>
+                <div class="text-gray-600">Établissements</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">50K+</div>
+                <div class="text-gray-600">Enseignants</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">95%</div>
+                <div class="text-gray-600">Satisfaction</div>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-blue-600 mb-2">24/7</div>
+                <div class="text-gray-600">Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 hero-gradient text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            Rejoignez nos clients satisfaits
+        </h2>
+        <p class="text-xl mb-8 text-blue-100">
+            Découvrez pourquoi tant d'établissements font confiance à Edtia
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'public:demo' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                <i data-lucide="rocket" class="inline-block mr-2"></i>
+                Demander une démonstration
+            </a>
+            <a href="{% url 'public:test_service' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                <i data-lucide="play" class="inline-block mr-2"></i>
+                Tester le service
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

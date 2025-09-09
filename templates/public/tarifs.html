@@ -1,0 +1,344 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Tarifs - Edtia{% endblock %}
+
+{% block meta_description %}Découvrez nos tarifs adaptés à tous les établissements éducatifs. Plans Starter, Professional et Enterprise avec essai gratuit de 30 jours.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Tarifs adaptés à votre établissement
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Choisissez le plan qui correspond à vos besoins. Essai gratuit 30 jours, sans engagement.
+        </p>
+    </div>
+</section>
+
+<!-- Plans tarifaires -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Nos plans tarifaires
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Des solutions évolutives pour accompagner la croissance de votre établissement
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Plan Starter -->
+            <div class="bg-white border-2 border-gray-200 rounded-xl p-8 relative">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                    <p class="text-gray-600 mb-4">Parfait pour les petites écoles</p>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">29€<span class="text-lg text-gray-600">/mois</span></div>
+                    <p class="text-sm text-gray-600">Jusqu'à 20 enseignants</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Optimisation emploi du temps</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Gestion des remplaçants</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Notifications de base</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Support email</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Jusqu'à 5 salles</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Stockage 1GB</span>
+                    </li>
+                </ul>
+                <a href="{% url 'public:demo' %}" class="w-full bg-gray-900 text-white py-3 rounded-lg font-semibold text-center block hover:bg-gray-800 transition-colors">
+                    Commencer l'essai gratuit
+                </a>
+            </div>
+            
+            <!-- Plan Professional -->
+            <div class="bg-white border-2 border-blue-600 rounded-xl p-8 relative">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                    <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Populaire</span>
+                </div>
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                    <p class="text-gray-600 mb-4">Pour les établissements moyens</p>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">79€<span class="text-lg text-gray-600">/mois</span></div>
+                    <p class="text-sm text-gray-600">Jusqu'à 100 enseignants</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Tout du plan Starter</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Prédiction d'absences IA</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Analytics avancées</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">API complète</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Support prioritaire</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Salles illimitées</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Stockage 10GB</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Intégrations tierces</span>
+                    </li>
+                </ul>
+                <a href="{% url 'public:demo' %}" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-center block hover:bg-blue-700 transition-colors">
+                    Commencer l'essai gratuit
+                </a>
+            </div>
+            
+            <!-- Plan Enterprise -->
+            <div class="bg-white border-2 border-gray-200 rounded-xl p-8">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                    <p class="text-gray-600 mb-4">Pour les rectorats et grandes structures</p>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">Sur mesure</div>
+                    <p class="text-sm text-gray-600">Illimité</p>
+                </div>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Tout du plan Professional</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Tableau de bord rectorat</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Multi-établissements</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Déploiement sur site</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Support dédié 24/7</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Formation personnalisée</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">SLA garantie</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="text-green-500 mr-3"></i>
+                        <span class="text-gray-600">Stockage illimité</span>
+                    </li>
+                </ul>
+                <a href="{% url 'public:contact' %}" class="w-full bg-gray-900 text-white py-3 rounded-lg font-semibold text-center block hover:bg-gray-800 transition-colors">
+                    Nous contacter
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparaison des fonctionnalités -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Comparaison détaillée
+            </h2>
+            <p class="text-xl text-gray-600">
+                Découvrez toutes les fonctionnalités incluses dans chaque plan
+            </p>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-gray-200">
+                        <th class="text-left py-4 px-6 font-semibold text-gray-900">Fonctionnalités</th>
+                        <th class="text-center py-4 px-6 font-semibold text-gray-900">Starter</th>
+                        <th class="text-center py-4 px-6 font-semibold text-gray-900">Professional</th>
+                        <th class="text-center py-4 px-6 font-semibold text-gray-900">Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Enseignants</td>
+                        <td class="py-4 px-6 text-center text-gray-600">Jusqu'à 20</td>
+                        <td class="py-4 px-6 text-center text-gray-600">Jusqu'à 100</td>
+                        <td class="py-4 px-6 text-center text-gray-600">Illimité</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Optimisation IA</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Gestion remplaçants</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Prédiction absences</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Analytics avancées</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">API complète</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Tableau de bord rectorat</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Multi-établissements</td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="x" class="text-red-500 mx-auto"></i></td>
+                        <td class="py-4 px-6 text-center"><i data-lucide="check" class="text-green-500 mx-auto"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6 font-medium text-gray-900">Support</td>
+                        <td class="py-4 px-6 text-center text-gray-600">Email</td>
+                        <td class="py-4 px-6 text-center text-gray-600">Prioritaire</td>
+                        <td class="py-4 px-6 text-center text-gray-600">24/7 dédié</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Tarifs -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+                Questions sur les tarifs
+            </h2>
+            <p class="text-xl text-gray-600">
+                Tout ce que vous devez savoir sur nos tarifs et conditions
+            </p>
+        </div>
+        
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    L'essai gratuit est-il vraiment gratuit ?
+                </h3>
+                <p class="text-gray-600">
+                    Oui, l'essai gratuit de 30 jours est entièrement gratuit, sans frais cachés et sans engagement. 
+                    Vous pouvez annuler à tout moment sans frais.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    Puis-je changer de plan à tout moment ?
+                </h3>
+                <p class="text-gray-600">
+                    Absolument ! Vous pouvez passer à un plan supérieur à tout moment. 
+                    Pour les rétrogradations, nous vous recommandons de nous contacter pour éviter toute perte de données.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    Y a-t-il des frais d'installation ?
+                </h3>
+                <p class="text-gray-600">
+                    Non, il n'y a aucun frais d'installation. L'accompagnement et la formation sont inclus 
+                    dans tous nos plans pour faciliter votre adoption.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    Proposez-vous des tarifs préférentiels pour l'éducation ?
+                </h3>
+                <p class="text-gray-600">
+                    Oui, nous proposons des tarifs préférentiels pour les établissements publics et les 
+                    associations éducatives. Contactez-nous pour plus d'informations.
+                </p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    Que se passe-t-il si je dépasse les limites de mon plan ?
+                </h3>
+                <p class="text-gray-600">
+                    Nous vous contacterons pour discuter de vos besoins. Généralement, nous vous proposerons 
+                    de passer au plan supérieur ou d'ajuster votre utilisation.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 hero-gradient text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-6">
+            Prêt à commencer votre essai gratuit ?
+        </h2>
+        <p class="text-xl mb-8 text-blue-100">
+            Découvrez Edtia en 30 minutes et transformez la gestion de vos emplois du temps
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'public:demo' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg">
+                <i data-lucide="rocket" class="inline-block mr-2"></i>
+                Commencer l'essai gratuit
+            </a>
+            <a href="{% url 'public:contact' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
+                <i data-lucide="phone" class="inline-block mr-2"></i>
+                Parler à un expert
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

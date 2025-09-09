@@ -1,0 +1,308 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Demander une démonstration - Edtia{% endblock %}
+
+{% block meta_description %}Demandez une démonstration personnalisée d'Edtia et découvrez comment notre solution d'optimisation des emplois du temps éducatifs peut transformer votre établissement.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Demandez votre démonstration personnalisée
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Découvrez comment Edtia peut transformer la gestion des emplois du temps 
+            de votre établissement en 30 minutes seulement.
+        </p>
+    </div>
+</section>
+
+<!-- Formulaire de démonstration -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Formulaire -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                    Informations de contact
+                </h2>
+                
+                <form id="demo-form" class="space-y-6">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="prenom" class="block text-sm font-medium text-gray-700 mb-2">Prénom *</label>
+                            <input 
+                                type="text" 
+                                id="prenom" 
+                                name="prenom" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Votre prénom"
+                            >
+                        </div>
+                        <div>
+                            <label for="nom" class="block text-sm font-medium text-gray-700 mb-2">Nom *</label>
+                            <input 
+                                type="text" 
+                                id="nom" 
+                                name="nom" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Votre nom"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email professionnel *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="votre@etablissement.fr"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="telephone" class="block text-sm font-medium text-gray-700 mb-2">Téléphone</label>
+                        <input 
+                            type="tel" 
+                            id="telephone" 
+                            name="telephone"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Votre numéro de téléphone"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="nom_etablissement" class="block text-sm font-medium text-gray-700 mb-2">Nom de l'établissement *</label>
+                        <input 
+                            type="text" 
+                            id="nom_etablissement" 
+                            name="nom_etablissement" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Nom de votre établissement"
+                        >
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="type_etablissement" class="block text-sm font-medium text-gray-700 mb-2">Type d'établissement *</label>
+                            <select 
+                                id="type_etablissement" 
+                                name="type_etablissement" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="">Sélectionnez...</option>
+                                <option value="ecole_primaire">École primaire</option>
+                                <option value="college">Collège</option>
+                                <option value="lycee">Lycée</option>
+                                <option value="universite">Université</option>
+                                <option value="centre_formation">Centre de formation</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="nombre_enseignants" class="block text-sm font-medium text-gray-700 mb-2">Nombre d'enseignants *</label>
+                            <input 
+                                type="number" 
+                                id="nombre_enseignants" 
+                                name="nombre_enseignants" 
+                                required
+                                min="1"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Ex: 50"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="ville" class="block text-sm font-medium text-gray-700 mb-2">Ville *</label>
+                        <input 
+                            type="text" 
+                            id="ville" 
+                            name="ville" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Ville de votre établissement"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Décrivez vos besoins spécifiques</label>
+                        <textarea 
+                            id="message" 
+                            name="message"
+                            rows="4"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Décrivez vos défis actuels et vos attentes..."
+                        ></textarea>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input 
+                            type="checkbox" 
+                            id="consentement" 
+                            name="consentement" 
+                            required
+                            class="mt-1 mr-3"
+                        >
+                        <label for="consentement" class="text-sm text-gray-600">
+                            J'accepte de recevoir des informations commerciales d'Edtia et j'ai lu la 
+                            <a href="{% url 'public:politique_confidentialite' %}" class="text-blue-600 hover:underline">politique de confidentialité</a>.
+                        </label>
+                    </div>
+                    
+                    <button 
+                        type="submit"
+                        class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
+                    >
+                        <i data-lucide="calendar" class="inline-block mr-2"></i>
+                        Demander ma démonstration
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Informations sur la démo -->
+            <div class="space-y-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        Ce que vous découvrirez
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Optimisation automatique</h4>
+                                <p class="text-gray-600">Comment l'IA résout vos conflits d'emploi du temps</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Gestion des remplaçants</h4>
+                                <p class="text-gray-600">Matching intelligent et notifications automatiques</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Tableaux de bord</h4>
+                                <p class="text-gray-600">Vues personnalisées selon votre rôle</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-green-500 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Intégration facile</h4>
+                                <p class="text-gray-600">Migration depuis votre système actuel</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl border border-blue-100">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        Pourquoi choisir Edtia ?
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                <i data-lucide="clock" class="text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Gain de temps</h4>
+                                <p class="text-gray-600 text-sm">Jusqu'à 80% de temps économisé</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                <i data-lucide="trending-up" class="text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Efficacité</h4>
+                                <p class="text-gray-600 text-sm">95% de satisfaction client</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <i data-lucide="shield-check" class="text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Sécurité</h4>
+                                <p class="text-gray-600 text-sm">Conformité RGPD garantie</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                        Questions fréquentes
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Combien de temps dure la démonstration ?</h4>
+                            <p class="text-gray-600 text-sm">Environ 30 minutes, adaptées à vos besoins spécifiques.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Quand serai-je contacté ?</h4>
+                            <p class="text-gray-600 text-sm">Dans les 24 heures ouvrées suivant votre demande.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">La démonstration est-elle gratuite ?</h4>
+                            <p class="text-gray-600 text-sm">Oui, entièrement gratuite et sans engagement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('demo-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    // Ajouter la source
+    data.source = 'page_demo';
+    
+    fetch('{% url "public:api_demo" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Afficher un message de succès
+            alert(data.message);
+            // Rediriger vers la page d'accueil
+            window.location.href = '{% url "public:accueil" %}';
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Une erreur est survenue. Veuillez réessayer.');
+    });
+});
+</script>
+{% endblock %}
+

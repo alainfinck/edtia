@@ -1,0 +1,303 @@
+{% extends 'public/base.html' %}
+{% load static %}
+
+{% block title %}Blog - Edtia{% endblock %}
+
+{% block meta_description %}Découvrez les dernières actualités, conseils et cas d'usage d'Edtia. Articles sur l'optimisation des emplois du temps éducatifs et l'intelligence artificielle.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Blog Edtia
+        </h1>
+        <p class="text-xl text-blue-100 mb-8">
+            Actualités, conseils et retours d'expérience sur l'optimisation des emplois du temps éducatifs
+        </p>
+    </div>
+</section>
+
+<!-- Articles -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if articles %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                {% if article.image_principale %}
+                <img src="{{ article.image_principale.url }}" alt="{{ article.titre }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="file-text" class="text-white w-16 h-16"></i>
+                </div>
+                {% endif %}
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            {{ article.get_categorie_display }}
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">{{ article.date_publication|date:"d M Y" }}</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="{% url 'public:article_detail' article.slug %}" class="hover:text-blue-600 transition-colors">
+                            {{ article.titre }}
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">{{ article.resume }}</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            {{ article.auteur.get_full_name|default:article.auteur.username }}
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            {{ article.vues }} vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Articles de démonstration -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <i data-lucide="brain" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Technique
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">15 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Comment l'IA révolutionne la gestion des emplois du temps
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Découvrez les algorithmes d'intelligence artificielle qui permettent d'optimiser automatiquement les emplois du temps éducatifs...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Équipe Edtia
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            1,234 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center">
+                    <i data-lucide="users" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Cas d'usage
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">12 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Collège Victor Hugo : 80% de temps économisé
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Retour d'expérience du Collège Victor Hugo qui a transformé sa gestion des emplois du temps avec Edtia...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Marie Dubois
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            856 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-orange-500 to-red-600 flex items-center justify-center">
+                    <i data-lucide="trending-up" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Actualités
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">10 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Prédiction d'absences : la nouvelle fonctionnalité
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Notre nouvelle fonctionnalité de prédiction d'absences utilise le machine learning pour anticiper les besoins...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Équipe Edtia
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            2,156 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                    <i data-lucide="book-open" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Tutoriels
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">8 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Guide complet : Migrer vers Edtia
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Tout ce que vous devez savoir pour migrer facilement depuis votre système actuel vers Edtia...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Support Edtia
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            1,789 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-teal-500 to-cyan-600 flex items-center justify-center">
+                    <i data-lucide="bar-chart" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-teal-100 text-teal-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Analytics
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">5 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Tableaux de bord : piloter votre établissement
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Découvrez comment utiliser les tableaux de bord d'Edtia pour piloter efficacement votre établissement...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Équipe Edtia
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            945 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="w-full h-48 bg-gradient-to-r from-indigo-500 to-blue-600 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="text-white w-16 h-16"></i>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded">
+                            Sécurité
+                        </span>
+                        <span class="text-gray-500 text-sm ml-4">3 Jan 2024</span>
+                    </div>
+                    
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        <a href="#" class="hover:text-blue-600 transition-colors">
+                            Sécurité et conformité RGPD
+                        </a>
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-4">Comment Edtia protège vos données et respecte la réglementation européenne...</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Équipe Edtia
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                            1,456 vues
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Restez informé des dernières actualités
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+            Recevez nos articles, conseils et nouveautés directement dans votre boîte mail
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+            <input 
+                type="email" 
+                id="newsletter-email"
+                placeholder="Votre email" 
+                class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+            <button 
+                onclick="subscribeNewsletter()"
+                class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+                S'abonner
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
