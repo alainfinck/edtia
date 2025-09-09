@@ -705,7 +705,18 @@
     
     // Simuler le traitement (dans une vraie app, ce serait un appel API)
     setTimeout(() => {
-        const resultats = genererResultatsOptimises(config);
+        const resultatsBruts = genererResultatsOptimises(config);
+        
+        // Adapter la structure des données pour l'affichage
+        const resultats = {
+            emploi_temps: resultatsBruts.emploi_temps,
+            emploi_par_prof: resultatsBruts.emploi_par_prof,
+            score_optimisation: resultatsBruts.metriques.optimisation / 100,
+            score_satisfaction: resultatsBruts.metriques.satisfaction / 100,
+            conflits_resolus: resultatsBruts.metriques.conflits_resolus,
+            temps_calcul: resultatsBruts.metriques.temps_generation,
+            recommandations: resultatsBruts.recommandations
+        };
         
         // Stocker les résultats pour l'affichage par professeur
         window.resultatsActuels = resultats;
