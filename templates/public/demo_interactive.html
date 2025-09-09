@@ -350,6 +350,11 @@
     </div>
 </section>
 
+<!-- Listes prédéfinies -->
+<div id="listes-predefinies" class="mt-8">
+    <!-- Les listes seront générées ici par JavaScript -->
+</div>
+
 <!-- Bouton flottant pour générer -->
 <div class="fixed bottom-6 right-6 z-50">
     <button onclick="genererEmploiTemps()" 
@@ -590,7 +595,7 @@ function genererResultatsOptimises(config) {
 function genererEmploiTempsStructure(config) {
     const jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
     const creneaux = ['8h-9h', '9h-10h', '10h-11h', '11h-12h', '14h-15h', '15h-16h', '16h-17h'];
-    const matieres = ['Maths', 'Français', 'Histoire', 'Sciences', 'Langues', 'EPS'];
+    const matieresDisponibles = ['Maths', 'Français', 'Histoire', 'Sciences', 'Langues', 'EPS'];
     
     // Professeurs avec noms réalistes
     const professeurs = [
@@ -604,6 +609,48 @@ function genererEmploiTempsStructure(config) {
         { nom: 'M. Durand', prenom: 'François', matieres: ['Sciences'], specialite: 'SVT' },
         { nom: 'Mme Blanc', prenom: 'Nathalie', matieres: ['Maths'], specialite: 'Mathématiques' },
         { nom: 'M. Garcia', prenom: 'Carlos', matieres: ['Langues'], specialite: 'Espagnol' }
+    ];
+    
+    // Salles de classe prédéfinies
+    const salles = [
+        { nom: 'A101', type: 'Salle générale', capacite: 30 },
+        { nom: 'A102', type: 'Salle générale', capacite: 28 },
+        { nom: 'A103', type: 'Salle générale', capacite: 32 },
+        { nom: 'A104', type: 'Salle générale', capacite: 25 },
+        { nom: 'B201', type: 'Laboratoire Sciences', capacite: 24 },
+        { nom: 'B202', type: 'Laboratoire Sciences', capacite: 20 },
+        { nom: 'C301', type: 'Salle Informatique', capacite: 30 },
+        { nom: 'C302', type: 'Salle Informatique', capacite: 28 },
+        { nom: 'D401', type: 'Salle de Langues', capacite: 25 },
+        { nom: 'D402', type: 'Salle de Langues', capacite: 22 },
+        { nom: 'E501', type: 'Salle d\'Arts', capacite: 20 },
+        { nom: 'F601', type: 'CDI', capacite: 50 },
+        { nom: 'G701', type: 'Salle de Musique', capacite: 25 },
+        { nom: 'H801', type: 'Gymnase', capacite: 40 },
+        { nom: 'H802', type: 'Salle EPS', capacite: 30 }
+    ];
+    
+    // Matières enseignées
+    const matieres = [
+        'Mathématiques', 'Français', 'Anglais', 'Espagnol', 'Histoire-Géographie',
+        'Sciences Physiques', 'SVT', 'Éducation Physique', 'Arts Plastiques',
+        'Musique', 'Technologie', 'Informatique', 'Philosophie', 'Économie'
+    ];
+    
+    // Classes de l'établissement
+    const classes = [
+        { nom: '6ème A', niveau: '6ème', eleves: 28 },
+        { nom: '6ème B', niveau: '6ème', eleves: 26 },
+        { nom: '6ème C', niveau: '6ème', eleves: 30 },
+        { nom: '5ème A', niveau: '5ème', eleves: 27 },
+        { nom: '5ème B', niveau: '5ème', eleves: 29 },
+        { nom: '5ème C', niveau: '5ème', eleves: 25 },
+        { nom: '4ème A', niveau: '4ème', eleves: 28 },
+        { nom: '4ème B', niveau: '4ème', eleves: 26 },
+        { nom: '4ème C', niveau: '4ème', eleves: 30 },
+        { nom: '3ème A', niveau: '3ème', eleves: 27 },
+        { nom: '3ème B', niveau: '3ème', eleves: 29 },
+        { nom: '3ème C', niveau: '3ème', eleves: 25 }
     ];
     
     const emploiTemps = {};
@@ -633,7 +680,7 @@ function genererEmploiTempsStructure(config) {
         creneaux.forEach(creneau => {
             // Générer des cours pour chaque classe
             for (let classe = 1; classe <= Math.min(config.nb_classes, 6); classe++) {
-                const matiere = matieres[Math.floor(Math.random() * matieres.length)];
+                const matiere = matieresDisponibles[Math.floor(Math.random() * matieresDisponibles.length)];
                 const salle = Math.floor(Math.random() * config.nb_salles) + 1;
                 
                 // Trouver un professeur pour cette matière
@@ -882,5 +929,104 @@ function exporterExcel() {
 function partagerEmploiTemps() {
     alert('Fonctionnalité de partage en cours de développement');
 }
+
+// Afficher les listes prédéfinies
+function afficherListesPredefinies() {
+    const container = document.getElementById('listes-predefinies');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                <i data-lucide="list" class="inline-block mr-2"></i>
+                Données prédéfinies de l'établissement
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Liste des enseignants -->
+                <div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i data-lucide="users" class="inline-block mr-2"></i>
+                        Enseignants (${professeurs.length})
+                    </h4>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${professeurs.map(prof => `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                                <div>
+                                    <div class="font-semibold text-gray-900">${prof.nom} ${prof.prenom}</div>
+                                    <div class="text-sm text-gray-600">${prof.specialite}</div>
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    ${prof.matieres.join(', ')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Liste des salles -->
+                <div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i data-lucide="building" class="inline-block mr-2"></i>
+                        Salles de classe (${salles.length})
+                    </h4>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${salles.map(salle => `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                                <div>
+                                    <div class="font-semibold text-gray-900">${salle.nom}</div>
+                                    <div class="text-sm text-gray-600">${salle.type}</div>
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    ${salle.capacite} places
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Liste des matières -->
+            <div class="mt-8">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                    <i data-lucide="book-open" class="inline-block mr-2"></i>
+                    Matières enseignées (${matieres.length})
+                </h4>
+                <div class="flex flex-wrap gap-2">
+                    ${matieres.map(matiere => `
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                            ${matiere}
+                        </span>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <!-- Liste des classes -->
+            <div class="mt-8">
+                <h4 class="text-xl font-semibold text-gray-800 mb-4">
+                    <i data-lucide="graduation-cap" class="inline-block mr-2"></i>
+                    Classes de l'établissement (${classes.length})
+                </h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    ${classes.map(classe => `
+                        <div class="p-3 bg-green-50 rounded-lg border text-center">
+                            <div class="font-semibold text-gray-900">${classe.nom}</div>
+                            <div class="text-sm text-gray-600">${classe.niveau}</div>
+                            <div class="text-xs text-gray-500">${classe.eleves} élèves</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Réinitialiser les icônes
+    lucide.createIcons();
+}
+
+// Appeler la fonction au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    afficherListesPredefinies();
+});
 </script>
 {% endblock %}
