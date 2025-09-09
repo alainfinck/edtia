@@ -669,64 +669,92 @@
         }
 
         function genererEmploiTemps() {
-    // Récupérer les données du formulaire
-    const config = {
-        nom_etablissement: document.getElementById('nom_etablissement').value,
-        type_etablissement: document.getElementById('type_etablissement').value,
-        nb_enseignants: parseInt(document.getElementById('nb_enseignants').value),
-        nb_classes: parseInt(document.getElementById('nb_classes').value),
-        nb_eleves: parseInt(document.getElementById('nb_eleves').value),
-        nb_salles: parseInt(document.getElementById('nb_salles').value),
-        salles_specialisees: {
-            sport: document.getElementById('salle_sport').checked,
-            info: document.getElementById('salle_info').checked,
-            labo: document.getElementById('labo_sciences').checked,
-            arts: document.getElementById('salle_arts').checked
-        },
-        contraintes: {
-            temps_partiel: parseInt(document.getElementById('temps_partiel').value),
-            transport_matin: document.getElementById('transport_matin').checked,
-            transport_soir: document.getElementById('transport_soir').checked,
-            pref_matin: document.getElementById('pref_matin').checked,
-            pref_journee: document.getElementById('pref_journee').checked
-        },
-        matieres: {
-            maths: parseInt(document.getElementById('maths').value),
-            francais: parseInt(document.getElementById('francais').value),
-            histoire: parseInt(document.getElementById('histoire').value),
-            sciences: parseInt(document.getElementById('sciences').value),
-            langues: parseInt(document.getElementById('langues').value),
-            eps: parseInt(document.getElementById('eps').value)
-        }
-    };
+    console.log('🚀 Début de génération de l\'emploi du temps');
     
-    // Afficher le loading
-    afficherLoading();
-    
-    // Simuler le traitement (dans une vraie app, ce serait un appel API)
-    setTimeout(() => {
-        const resultatsBruts = genererResultatsOptimises(config);
-        
-        // Adapter la structure des données pour l'affichage
-        const resultats = {
-            emploi_temps: resultatsBruts.emploi_temps,
-            emploi_par_prof: resultatsBruts.emploi_par_prof,
-            score_optimisation: resultatsBruts.metriques.optimisation / 100,
-            score_satisfaction: resultatsBruts.metriques.satisfaction / 100,
-            conflits_resolus: resultatsBruts.metriques.conflits_resolus,
-            temps_calcul: resultatsBruts.metriques.temps_generation,
-            recommandations: resultatsBruts.recommandations
+    try {
+        // Récupérer les données du formulaire
+        const config = {
+            nom_etablissement: document.getElementById('nom_etablissement').value || 'École Test',
+            type_etablissement: document.getElementById('type_etablissement').value || 'Collège',
+            nb_enseignants: parseInt(document.getElementById('nb_enseignants').value) || 10,
+            nb_classes: parseInt(document.getElementById('nb_classes').value) || 6,
+            nb_eleves: parseInt(document.getElementById('nb_eleves').value) || 150,
+            nb_salles: parseInt(document.getElementById('nb_salles').value) || 8,
+            salles_specialisees: {
+                sport: document.getElementById('salle_sport')?.checked || false,
+                info: document.getElementById('salle_info')?.checked || false,
+                labo: document.getElementById('labo_sciences')?.checked || false,
+                arts: document.getElementById('salle_arts')?.checked || false
+            },
+            contraintes: {
+                temps_partiel: parseInt(document.getElementById('temps_partiel').value) || 20,
+                transport_matin: document.getElementById('transport_matin')?.checked || false,
+                transport_soir: document.getElementById('transport_soir')?.checked || false,
+                pref_matin: document.getElementById('pref_matin')?.checked || false,
+                pref_journee: document.getElementById('pref_journee')?.checked || false
+            },
+            matieres: {
+                maths: parseInt(document.getElementById('maths').value) || 5,
+                francais: parseInt(document.getElementById('francais').value) || 4,
+                histoire: parseInt(document.getElementById('histoire').value) || 3,
+                sciences: parseInt(document.getElementById('sciences').value) || 4,
+                langues: parseInt(document.getElementById('langues').value) || 3,
+                eps: parseInt(document.getElementById('eps').value) || 2
+            }
         };
         
-        // Stocker les résultats pour l'affichage par professeur
-        window.resultatsActuels = resultats;
+        console.log('📋 Configuration récupérée:', config);
         
-        afficherResultatsAvecAnimation(resultats);
-    }, 2000);
+        // Afficher le loading
+        console.log('⏳ Affichage du loading...');
+        afficherLoading();
+        
+        // Simuler le traitement (dans une vraie app, ce serait un appel API)
+        setTimeout(() => {
+            console.log('🔄 Génération des résultats...');
+            try {
+                const resultatsBruts = genererResultatsOptimises(config);
+                console.log('✅ Résultats bruts générés:', resultatsBruts);
+                
+                // Adapter la structure des données pour l'affichage
+                const resultats = {
+                    emploi_temps: resultatsBruts.emploi_temps,
+                    emploi_par_prof: resultatsBruts.emploi_par_prof,
+                    score_optimisation: resultatsBruts.metriques.optimisation / 100,
+                    score_satisfaction: resultatsBruts.metriques.satisfaction / 100,
+                    conflits_resolus: resultatsBruts.metriques.conflits_resolus,
+                    temps_calcul: resultatsBruts.metriques.temps_generation,
+                    recommandations: resultatsBruts.recommandations
+                };
+                
+                console.log('🎯 Résultats adaptés:', resultats);
+                
+                // Stocker les résultats pour l'affichage par professeur
+                window.resultatsActuels = resultats;
+                
+                console.log('🎨 Affichage des résultats avec animation...');
+                afficherResultatsAvecAnimation(resultats);
+            } catch (error) {
+                console.error('❌ Erreur lors de la génération:', error);
+                alert('Erreur lors de la génération: ' + error.message);
+            }
+        }, 2000);
+    } catch (error) {
+        console.error('❌ Erreur dans genererEmploiTemps:', error);
+        alert('Erreur: ' + error.message);
+    }
 }
 
 function afficherLoading() {
+    console.log('🎬 Affichage du loading...');
     const container = document.getElementById('demo-results');
+    
+    if (!container) {
+        console.error('❌ Conteneur demo-results non trouvé!');
+        return;
+    }
+    
+    console.log('✅ Conteneur trouvé, génération du HTML de loading...');
     container.innerHTML = `
         <div class="bg-white p-8 rounded-xl shadow-lg particles">
             <div class="text-center">
@@ -862,6 +890,8 @@ function afficherLoading() {
     setTimeout(() => {
         clearInterval(messageInterval);
     }, 2000);
+    
+    console.log('✅ Loading affiché avec succès');
 }
 
 function genererResultatsOptimises(config) {
