@@ -14,7 +14,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 PROJECT_NAME="Edtia"
-VENV_DIR="venv"
+VENV_DIR=".venv"
 
 echo -e "${BLUE}🚀 Déploiement en production de $PROJECT_NAME${NC}"
 echo -e "${BLUE}===========================================${NC}"

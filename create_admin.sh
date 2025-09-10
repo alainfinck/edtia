@@ -22,9 +22,9 @@ if [ ! -f "manage.py" ]; then
 fi
 
 # Activer l'environnement virtuel s'il existe
-if [ -d "venv" ]; then
+if [ -d ".venv" ]; then
     echo -e "${YELLOW}🐍 Activation de l'environnement virtuel...${NC}"
-    source venv/bin/activate
+    source .venv/bin/activate
 fi
 
 # Créer le superutilisateur

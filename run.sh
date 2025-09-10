@@ -14,7 +14,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 PROJECT_NAME="Edtia"
-VENV_DIR="venv"
+VENV_DIR=".venv"
 PORT=${1:-8000}
 
 echo -e "${BLUE}🚀 Lancement de $PROJECT_NAME${NC}"
