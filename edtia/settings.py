@@ -222,7 +222,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # WhiteNoise Configuration for Static Files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Cache Configuration (désactivé pour le développement)
 # CACHES = {
