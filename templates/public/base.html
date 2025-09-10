@@ -13,17 +13,57 @@
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{% block og_title %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA. Gérez intelligemment les remplaçants et optimisez les ressources pédagogiques.{% endblock %}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{% block og_image %}https://via.placeholder.com/1200x630/3b82f6/ffffff?text=Edtia{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/edtia-og-image.svg' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{% block og_image_alt %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
     <meta property="og:site_name" content="Edtia">
+    <meta property="og:locale" content="fr_FR">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@edtia">
+    <meta name="twitter:creator" content="@edtia">
     <meta name="twitter:title" content="{% block twitter_title %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}https://via.placeholder.com/1200x630/3b82f6/ffffff?text=Edtia{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'IA. Gérez intelligemment les remplaçants et optimisez les ressources pédagogiques.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/edtia-og-image.svg' %}{% endblock %}">
+    <meta name="twitter:image:alt" content="{% block twitter_image_alt %}Edtia - Optimisation des emplois du temps éducatifs{% endblock %}">
+    
+    <!-- Additional Meta Tags for Better Social Sharing -->
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Edtia">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Edtia",
+        "description": "Solution SaaS d'optimisation des emplois du temps éducatifs alimentée par l'intelligence artificielle",
+        "url": "{{ request.build_absolute_uri }}",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "description": "Essai gratuit disponible"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Edtia",
+            "url": "{{ request.scheme }}://{{ request.get_host }}"
+        }
+    }
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">

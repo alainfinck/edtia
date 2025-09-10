@@ -5,6 +5,16 @@
 
 {% block meta_description %}Testez Edtia avec vos données réelles. Créez des emplois du temps optimisés pour votre établissement avec notre démonstration interactive.{% endblock %}
 
+{% block og_title %}Démonstration Interactive Edtia - Testez l'IA d'optimisation{% endblock %}
+{% block og_description %}Créez des emplois du temps optimisés en temps réel avec notre démonstration interactive. Testez l'IA d'Edtia avec vos propres données d'établissement.{% endblock %}
+{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/demo-interactive-og.svg' %}{% endblock %}
+{% block og_image_alt %}Démonstration Interactive Edtia - Interface de génération d'emplois du temps{% endblock %}
+
+{% block twitter_title %}Démonstration Interactive Edtia - Testez l'IA d'optimisation{% endblock %}
+{% block twitter_description %}Créez des emplois du temps optimisés en temps réel avec notre démonstration interactive. Testez l'IA d'Edtia avec vos propres données d'établissement.{% endblock %}
+{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/demo-interactive-og.svg' %}{% endblock %}
+{% block twitter_image_alt %}Démonstration Interactive Edtia - Interface de génération d'emplois du temps{% endblock %}
+
 {% block extra_css %}
 <style>
     /* Animations personnalisées */
@@ -54,6 +64,15 @@
     
     .animate-fade-in-scale {
         animation: fadeInScale 0.5s ease-out;
+    }
+    
+    @keyframes pulse-slow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse-slow 3s ease-in-out infinite;
     }
     
     /* Effet de particules pour le loading */
@@ -222,25 +241,33 @@
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-gradient text-white py-16">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">
-            Démonstration Interactive
-        </h1>
-        <p class="text-xl text-blue-100 mb-8">
-            Créez des emplois du temps optimisés avec vos données réelles
-        </p>
-        
-        <!-- Bouton générer rapide -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button onclick="genererEmploiTemps()" 
-                    class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg flex items-center">
-                <i data-lucide="play" class="mr-2"></i>
-                Générer l'emploi du temps
-            </button>
-            <div class="text-blue-100 text-sm">
-                <i data-lucide="info" class="inline-block mr-1"></i>
-                Configurez d'abord votre établissement ci-dessous
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between">
+            <!-- Logo étudiant animé à gauche -->
+            <div class="flex-shrink-0">
+                <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-pulse-slow">
+                    <i data-lucide="graduation-cap" class="text-white w-10 h-10"></i>
+                </div>
             </div>
+            
+            <!-- Contenu central -->
+            <div class="flex-1 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                    Démonstration Interactive
+                </h1>
+                <p class="text-xl text-blue-100 mb-8">
+                    Créez des emplois du temps optimisés avec vos données réelles
+                </p>
+                
+                <!-- Message informatif -->
+                <div class="text-blue-100 text-sm">
+                    <i data-lucide="info" class="inline-block mr-1"></i>
+                    Configurez votre établissement ci-dessous, puis générez votre emploi du temps
+                </div>
+            </div>
+            
+            <!-- Espace vide à droite pour équilibrer -->
+            <div class="flex-shrink-0 w-20"></div>
         </div>
     </div>
 </section>
@@ -251,7 +278,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
             <!-- Configuration -->
             <div class="xl:col-span-1">
-                <div class="bg-white p-6 rounded-xl shadow-lg sticky top-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg sticky top-8 -mt-16 relative z-10">
                     <!-- Bouton générer en haut -->
                     <div class="mb-6">
                         <button onclick="genererEmploiTemps()" 
@@ -465,6 +492,16 @@
                         <p class="text-gray-600 mb-6">
                             Configurez votre établissement dans le panneau de gauche, puis cliquez sur "Générer l'emploi du temps" pour voir la magie opérer !
                         </p>
+                        
+                        <!-- Bouton générer principal -->
+                        <div class="mb-6">
+                            <button onclick="genererEmploiTemps()" 
+                                    class="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg flex items-center mx-auto">
+                                <i data-lucide="play" class="mr-2"></i>
+                                Générer l'emploi du temps
+                            </button>
+                        </div>
+                        
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <p class="text-blue-800 text-sm">
                                 <i data-lucide="info" class="inline-block mr-2"></i>
@@ -592,8 +629,8 @@
             
             // Désactiver tous les onglets
             document.querySelectorAll('[id^="tab-"]').forEach(tab => {
-                tab.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
-                tab.classList.add('text-gray-600', 'hover:text-blue-600');
+                tab.classList.remove('bg-white', 'text-blue-700', 'shadow-lg', 'border-blue-200');
+                tab.classList.add('text-gray-700', 'border-transparent');
             });
             
             // Afficher le contenu sélectionné
@@ -601,8 +638,8 @@
             
             // Activer l'onglet sélectionné
             const tabActif = document.getElementById(`tab-${onglet}`);
-            tabActif.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
-            tabActif.classList.remove('text-gray-600', 'hover:text-blue-600');
+            tabActif.classList.add('bg-white', 'text-blue-700', 'shadow-lg', 'border-blue-200');
+            tabActif.classList.remove('text-gray-700', 'border-transparent');
             
             // Si c'est l'onglet professeurs, générer le contenu
             if (onglet === 'professeurs' && window.resultatsActuels) {
@@ -1205,14 +1242,14 @@ function afficherResultats(resultats) {
             <div class="bg-white p-8 rounded-xl shadow-lg">
                     <!-- Onglets -->
                     <div class="mb-6">
-                        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-                            <button onclick="afficherOnglet('general')" id="tab-general" 
-                                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors bg-white text-blue-600 shadow-sm">
+                        <div class="flex space-x-2 bg-gray-200 p-2 rounded-xl border-2 border-gray-300">
+                            <button onclick="afficherOnglet('generale')" id="tab-generale" 
+                                    class="flex-1 py-3 px-6 text-base font-semibold rounded-lg transition-all duration-200 bg-white text-blue-700 shadow-lg border-2 border-blue-200 hover:shadow-xl">
                                 <i data-lucide="calendar" class="inline-block mr-2"></i>
                                 Vue générale
                             </button>
                             <button onclick="afficherOnglet('professeurs')" id="tab-professeurs" 
-                                    class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-colors text-gray-600 hover:text-blue-600">
+                                    class="flex-1 py-3 px-6 text-base font-semibold rounded-lg transition-all duration-200 text-gray-700 hover:text-blue-700 hover:bg-white hover:shadow-lg border-2 border-transparent hover:border-blue-200">
                                 <i data-lucide="users" class="inline-block mr-2"></i>
                                 Par professeur
                             </button>
@@ -1343,8 +1380,15 @@ function afficherResultats(resultats) {
                             <i data-lucide="clock" class="inline-block mr-2"></i>
                             Heures par enseignant
                         </h4>
-                        <div class="space-y-3 max-h-80 overflow-y-auto">
-                            ${genererStatistiquesEnseignants(resultats.emploi_par_prof)}
+                        <div id="stats-enseignants-container" class="space-y-3">
+                            ${genererStatistiquesEnseignants(resultats.emploi_par_prof, 3)}
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button onclick="afficherTousEnseignants()" id="btn-voir-plus-enseignants"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                                <i data-lucide="chevron-down" class="inline-block mr-1"></i>
+                                Voir tous les enseignants
+                            </button>
                         </div>
                     </div>
                     
@@ -1354,8 +1398,15 @@ function afficherResultats(resultats) {
                             <i data-lucide="building" class="inline-block mr-2"></i>
                             Occupation des salles
                         </h4>
-                        <div class="space-y-3 max-h-80 overflow-y-auto">
-                            ${genererStatistiquesSalles(resultats.emploi_temps)}
+                        <div id="stats-salles-container" class="space-y-3">
+                            ${genererStatistiquesSalles(resultats.emploi_temps, 3)}
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button onclick="afficherToutesSalles()" id="btn-voir-plus-salles"
+                                    class="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                                <i data-lucide="chevron-down" class="inline-block mr-1"></i>
+                                Voir toutes les salles
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1422,18 +1473,26 @@ function partagerEmploiTemps() {
 }
 
 // Fonctions pour générer les statistiques détaillées
-function genererStatistiquesEnseignants(emploiParProf) {
+function genererStatistiquesEnseignants(emploiParProf, limite = null) {
     const stats = [];
+    const enseignants = Object.keys(emploiParProf);
+    const enseignantsAffiches = limite ? enseignants.slice(0, limite) : enseignants;
     
-    Object.keys(emploiParProf).forEach(nomProf => {
-        const cours = emploiParProf[nomProf];
-        const totalHeures = cours.length;
+    enseignantsAffiches.forEach(nomProf => {
+        const emploiProf = emploiParProf[nomProf];
+        let totalHeures = 0;
         const heuresParJour = {};
         
-        // Compter les heures par jour
-        cours.forEach(cours => {
-            const jour = cours.jour;
-            heuresParJour[jour] = (heuresParJour[jour] || 0) + 1;
+        // Compter les heures par jour en parcourant la structure imbriquée
+        Object.keys(emploiProf).forEach(jour => {
+            heuresParJour[jour] = 0;
+            Object.keys(emploiProf[jour]).forEach(creneau => {
+                const coursDuCreneau = emploiProf[jour][creneau];
+                if (coursDuCreneau && coursDuCreneau.length > 0) {
+                    heuresParJour[jour] += coursDuCreneau.length;
+                    totalHeures += coursDuCreneau.length;
+                }
+            });
         });
         
         // Calculer la charge de travail
@@ -1465,20 +1524,28 @@ function genererStatistiquesEnseignants(emploiParProf) {
     return stats.join('');
 }
 
-function genererStatistiquesSalles(emploiTemps) {
+function genererStatistiquesSalles(emploiTemps, limite = null) {
     const occupationSalles = {};
     const totalCreneaux = 35; // 5 jours × 7 créneaux
     
-    // Compter l'occupation de chaque salle
-    Object.values(emploiTemps).forEach(cours => {
-        cours.forEach(c => {
-            const salle = c.salle;
-            occupationSalles[salle] = (occupationSalles[salle] || 0) + 1;
+    // Compter l'occupation de chaque salle en parcourant la structure imbriquée
+    Object.keys(emploiTemps).forEach(jour => {
+        Object.keys(emploiTemps[jour]).forEach(creneau => {
+            const coursDuCreneau = emploiTemps[jour][creneau];
+            if (coursDuCreneau && coursDuCreneau.length > 0) {
+                coursDuCreneau.forEach(c => {
+                    const salle = c.salle;
+                    occupationSalles[salle] = (occupationSalles[salle] || 0) + 1;
+                });
+            }
         });
     });
     
     const stats = [];
-    Object.entries(occupationSalles).forEach(([salle, occupation]) => {
+    const salles = Object.entries(occupationSalles);
+    const sallesAffichees = limite ? salles.slice(0, limite) : salles;
+    
+    sallesAffichees.forEach(([salle, occupation]) => {
         const tauxOccupation = (occupation / totalCreneaux) * 100;
         const couleur = tauxOccupation > 80 ? 'red' : tauxOccupation > 60 ? 'yellow' : 'green';
         
@@ -1510,11 +1577,16 @@ function genererStatistiquesSalles(emploiTemps) {
 function genererStatistiquesMatieres(emploiTemps) {
     const matieresCount = {};
     
-    // Compter les cours par matière
-    Object.values(emploiTemps).forEach(cours => {
-        cours.forEach(c => {
-            const matiere = c.matiere;
-            matieresCount[matiere] = (matieresCount[matiere] || 0) + 1;
+    // Compter les cours par matière en parcourant la structure imbriquée
+    Object.keys(emploiTemps).forEach(jour => {
+        Object.keys(emploiTemps[jour]).forEach(creneau => {
+            const coursDuCreneau = emploiTemps[jour][creneau];
+            if (coursDuCreneau && coursDuCreneau.length > 0) {
+                coursDuCreneau.forEach(c => {
+                    const matiere = c.matiere;
+                    matieresCount[matiere] = (matieresCount[matiere] || 0) + 1;
+                });
+            }
         });
     });
     
@@ -1537,10 +1609,164 @@ function genererStatistiquesMatieres(emploiTemps) {
     }).join('');
 }
 
+// Fonctions pour afficher tous les éléments
+function afficherTousEnseignants() {
+    if (window.resultatsActuels && window.resultatsActuels.emploi_par_prof) {
+        const container = document.getElementById('stats-enseignants-container');
+        const button = document.getElementById('btn-voir-plus-enseignants');
+        
+        // Animation de fermeture puis ouverture
+        container.style.transition = 'all 0.3s ease-in-out';
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            container.innerHTML = genererStatistiquesEnseignants(window.resultatsActuels.emploi_par_prof);
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+            
+            // Animation du bouton
+            button.style.transition = 'all 0.3s ease-in-out';
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.innerHTML = '<i data-lucide="chevron-up" class="inline-block mr-1"></i>Voir moins';
+                button.style.transform = 'scale(1)';
+            }, 150);
+            
+            button.onclick = function() {
+                // Animation de fermeture
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    container.innerHTML = genererStatistiquesEnseignants(window.resultatsActuels.emploi_par_prof, 3);
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                    
+                    // Animation du bouton
+                    button.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        button.innerHTML = '<i data-lucide="chevron-down" class="inline-block mr-1"></i>Voir tous les enseignants';
+                        button.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    button.onclick = afficherTousEnseignants;
+                }, 300);
+            };
+            
+            // Réinitialiser les icônes
+            lucide.createIcons();
+        }, 300);
+    }
+}
+
+function afficherToutesSalles() {
+    if (window.resultatsActuels && window.resultatsActuels.emploi_temps) {
+        const container = document.getElementById('stats-salles-container');
+        const button = document.getElementById('btn-voir-plus-salles');
+        
+        // Animation de fermeture puis ouverture
+        container.style.transition = 'all 0.3s ease-in-out';
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            container.innerHTML = genererStatistiquesSalles(window.resultatsActuels.emploi_temps);
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+            
+            // Animation du bouton
+            button.style.transition = 'all 0.3s ease-in-out';
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.innerHTML = '<i data-lucide="chevron-up" class="inline-block mr-1"></i>Voir moins';
+                button.style.transform = 'scale(1)';
+            }, 150);
+            
+            button.onclick = function() {
+                // Animation de fermeture
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    container.innerHTML = genererStatistiquesSalles(window.resultatsActuels.emploi_temps, 3);
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                    
+                    // Animation du bouton
+                    button.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        button.innerHTML = '<i data-lucide="chevron-down" class="inline-block mr-1"></i>Voir toutes les salles';
+                        button.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                    button.onclick = afficherToutesSalles;
+                }, 300);
+            };
+            
+            // Réinitialiser les icônes
+            lucide.createIcons();
+        }, 300);
+    }
+}
+
 // Afficher les listes prédéfinies
 function afficherListesPredefinies() {
     const container = document.getElementById('listes-predefinies');
     if (!container) return;
+    
+    // Données prédéfinies
+    const professeurs = [
+        { nom: 'Mme Dubois', prenom: 'Sophie', matieres: ['Maths', 'Sciences'], specialite: 'Mathématiques' },
+        { nom: 'M. Martin', prenom: 'Pierre', matieres: ['Français', 'Histoire'], specialite: 'Lettres' },
+        { nom: 'Mme Leroy', prenom: 'Marie', matieres: ['Langues'], specialite: 'Anglais' },
+        { nom: 'M. Bernard', prenom: 'Jean', matieres: ['Sciences'], specialite: 'Physique-Chimie' },
+        { nom: 'Mme Petit', prenom: 'Claire', matieres: ['Histoire'], specialite: 'Histoire-Géographie' },
+        { nom: 'M. Rousseau', prenom: 'Antoine', matieres: ['EPS'], specialite: 'Éducation Physique' },
+        { nom: 'Mme Moreau', prenom: 'Isabelle', matieres: ['Français'], specialite: 'Français' },
+        { nom: 'M. Durand', prenom: 'François', matieres: ['Sciences'], specialite: 'SVT' },
+        { nom: 'Mme Blanc', prenom: 'Nathalie', matieres: ['Maths'], specialite: 'Mathématiques' },
+        { nom: 'M. Garcia', prenom: 'Carlos', matieres: ['Langues'], specialite: 'Espagnol' }
+    ];
+    
+    const salles = [
+        { nom: 'A101', type: 'Salle générale', capacite: 30 },
+        { nom: 'A102', type: 'Salle générale', capacite: 28 },
+        { nom: 'A103', type: 'Salle générale', capacite: 32 },
+        { nom: 'A104', type: 'Salle générale', capacite: 25 },
+        { nom: 'B201', type: 'Laboratoire Sciences', capacite: 24 },
+        { nom: 'B202', type: 'Laboratoire Sciences', capacite: 20 },
+        { nom: 'C301', type: 'Salle Informatique', capacite: 30 },
+        { nom: 'C302', type: 'Salle Informatique', capacite: 28 },
+        { nom: 'D401', type: 'Salle de Langues', capacite: 25 },
+        { nom: 'D402', type: 'Salle de Langues', capacite: 22 },
+        { nom: 'E501', type: 'Salle d\'Arts', capacite: 20 },
+        { nom: 'F601', type: 'CDI', capacite: 50 },
+        { nom: 'G701', type: 'Salle de Musique', capacite: 25 },
+        { nom: 'H801', type: 'Gymnase', capacite: 40 },
+        { nom: 'H802', type: 'Salle EPS', capacite: 30 }
+    ];
+    
+    const matieres = [
+        'Mathématiques', 'Français', 'Anglais', 'Espagnol', 'Histoire-Géographie',
+        'Sciences Physiques', 'SVT', 'Éducation Physique', 'Arts Plastiques',
+        'Musique', 'Technologie', 'Informatique', 'Philosophie', 'Économie'
+    ];
+    
+    const classes = [
+        { nom: '6ème A', niveau: '6ème', eleves: 28 },
+        { nom: '6ème B', niveau: '6ème', eleves: 26 },
+        { nom: '6ème C', niveau: '6ème', eleves: 30 },
+        { nom: '5ème A', niveau: '5ème', eleves: 27 },
+        { nom: '5ème B', niveau: '5ème', eleves: 29 },
+        { nom: '5ème C', niveau: '5ème', eleves: 25 },
+        { nom: '4ème A', niveau: '4ème', eleves: 28 },
+        { nom: '4ème B', niveau: '4ème', eleves: 26 },
+        { nom: '4ème C', niveau: '4ème', eleves: 30 },
+        { nom: '3ème A', niveau: '3ème', eleves: 27 },
+        { nom: '3ème B', niveau: '3ème', eleves: 29 },
+        { nom: '3ème C', niveau: '3ème', eleves: 25 }
+    ];
     
     container.innerHTML = `
         <div class="bg-white p-8 rounded-xl shadow-lg">

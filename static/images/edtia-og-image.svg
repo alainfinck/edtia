@@ -1,0 +1,102 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3730a3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#581c87;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.95" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="50" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1100" cy="530" r="80" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="200" cy="500" r="30" fill="rgba(255,255,255,0.12)"/>
+  <circle cx="1000" cy="150" r="40" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- Main content card -->
+  <rect x="100" y="100" width="1000" height="430" rx="20" fill="url(#cardGradient)" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  
+  <!-- Logo area -->
+  <rect x="150" y="150" width="80" height="80" rx="15" fill="#3b82f6"/>
+  <text x="190" y="200" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="40" font-weight="bold">📅</text>
+  
+  <!-- Title -->
+  <text x="280" y="200" fill="#1f2937" font-family="Arial, sans-serif" font-size="48" font-weight="bold">Edtia</text>
+  
+  <!-- Subtitle -->
+  <text x="280" y="250" fill="#4b5563" font-family="Arial, sans-serif" font-size="24" font-weight="normal">Optimisation des emplois du temps éducatifs</text>
+  
+  <!-- Description -->
+  <text x="280" y="300" fill="#6b7280" font-family="Arial, sans-serif" font-size="18" font-weight="normal">Solution SaaS alimentée par l'IA</text>
+  
+  <!-- Features -->
+  <g transform="translate(280, 350)">
+    <!-- Feature 1 -->
+    <circle cx="15" cy="15" r="8" fill="#10b981"/>
+    <text x="35" y="20" fill="#374151" font-family="Arial, sans-serif" font-size="16">Gestion intelligente des remplaçants</text>
+    
+    <!-- Feature 2 -->
+    <circle cx="15" cy="45" r="8" fill="#3b82f6"/>
+    <text x="35" y="50" fill="#374151" font-family="Arial, sans-serif" font-size="16">Optimisation des ressources pédagogiques</text>
+    
+    <!-- Feature 3 -->
+    <circle cx="15" cy="75" r="8" fill="#8b5cf6"/>
+    <text x="35" y="80" fill="#374151" font-family="Arial, sans-serif" font-size="16">Intelligence artificielle avancée</text>
+  </g>
+  
+  <!-- CTA Button -->
+  <rect x="280" y="450" width="200" height="50" rx="25" fill="#3b82f6"/>
+  <text x="380" y="480" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Essai gratuit</text>
+  
+  <!-- Right side illustration -->
+  <g transform="translate(700, 200)">
+    <!-- Calendar icon -->
+    <rect x="0" y="0" width="120" height="100" rx="10" fill="#e5e7eb" stroke="#d1d5db" stroke-width="2"/>
+    <rect x="10" y="10" width="100" height="20" fill="#3b82f6"/>
+    <text x="60" y="25" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">2024</text>
+    
+    <!-- Calendar grid -->
+    <g transform="translate(10, 35)">
+      <!-- Days of week -->
+      <text x="0" y="0" fill="#6b7280" font-family="Arial, sans-serif" font-size="8">L</text>
+      <text x="15" y="0" fill="#6b7280" font-family="Arial, sans-serif" font-size="8">M</text>
+      <text x="30" y="0" fill="#6b7280" font-family="Arial, sans-serif" font-size="8">M</text>
+      <text x="45" y="0" fill="#6b7280" font-family="Arial, sans-serif" font-size="8">J</text>
+      <text x="60" y="0" fill="#6b7280" font-family="Arial, sans-serif" font-size="8">V</text>
+      
+      <!-- Calendar days -->
+      <rect x="0" y="10" width="12" height="10" fill="#f3f4f6"/>
+      <rect x="15" y="10" width="12" height="10" fill="#dbeafe"/>
+      <rect x="30" y="10" width="12" height="10" fill="#f3f4f6"/>
+      <rect x="45" y="10" width="12" height="10" fill="#dcfce7"/>
+      <rect x="60" y="10" width="12" height="10" fill="#f3f4f6"/>
+      
+      <rect x="0" y="25" width="12" height="10" fill="#fef3c7"/>
+      <rect x="15" y="25" width="12" height="10" fill="#f3f4f6"/>
+      <rect x="30" y="25" width="12" height="10" fill="#e0e7ff"/>
+      <rect x="45" y="25" width="12" height="10" fill="#f3f4f6"/>
+      <rect x="60" y="25" width="12" height="10" fill="#fce7f3"/>
+    </g>
+    
+    <!-- AI brain icon -->
+    <g transform="translate(150, 20)">
+      <circle cx="30" cy="30" r="25" fill="#8b5cf6" opacity="0.2"/>
+      <circle cx="30" cy="30" r="20" fill="#8b5cf6"/>
+      <path d="M20 25 Q30 15 40 25 Q30 35 20 25" fill="white"/>
+      <circle cx="25" cy="25" r="2" fill="#8b5cf6"/>
+      <circle cx="35" cy="25" r="2" fill="#8b5cf6"/>
+      <path d="M25 30 Q30 35 35 30" fill="#8b5cf6"/>
+    </g>
+  </g>
+  
+  <!-- Bottom text -->
+  <text x="600" y="580" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="16">www.edtia.fr</text>
+</svg>
